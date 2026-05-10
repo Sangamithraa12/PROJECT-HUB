@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ProjectHubAPI/ProjectHubAPI.csproj" />
+  <Project Path="ProjectHubAPI.Tests/ProjectHubAPI.Tests.csproj" />
+</Solution>

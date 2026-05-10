@@ -1,43 +1,32 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Frontend
+FRONTEND/projecthub-ui/dist/
+FRONTEND/projecthub-ui/node_modules/
+FRONTEND/projecthub-ui/.angular/
+FRONTEND/projecthub-ui/tmp/
+FRONTEND/projecthub-ui/out-tsc/
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Backend
+BACKEND/ProjectHubAPI/**/bin/
+BACKEND/ProjectHubAPI/**/obj/
+BACKEND/ProjectHubAPI/.vs/
+BACKEND/ProjectHubAPI/*.user
+BACKEND/ProjectHubAPI/*.suo
+BACKEND/ProjectHubAPI/*.vsidx
 
 # IDEs and editors
 .idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Visual Studio Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/mcp.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-__screenshots__/
+.history/
+*.launch
+.settings/
+*.sublime-workspace
 
 # System files
 .DS_Store

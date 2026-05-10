@@ -1,80 +1,133 @@
-# ProjectHub 🚀
+# 🚀 ProjectHub
 
-ProjectHub is a premium, elite-standard task management and collaboration platform built for seamless team coordination. It delivers a modern, high-performance experience with advanced UI design, secure architecture, and scalable backend systems.
+> A premium task management and collaboration platform built for seamless team coordination — featuring real-time communication, role-based dashboards, and an integrated LMS.
 
-### 💎 Elite UI/UX
-- Clean Tech modern design
-- Glassmorphism UI components
-- Smooth micro-animations
-- Dynamic light/dark theme switching
+---
+
+## ✨ Features
 
 ### 🔐 Secure Authentication
-- JWT-based authentication
-- Role-Based Access Control (RBAC)
-- BCrypt password hashing
+- JWT-based authentication with BCrypt password hashing
+- Role-Based Access Control (RBAC) — Admin, Manager, Employee
 - Legacy password auto-migration to secure format
 
-### ⚡ High Performance
-- Fast API responses using Mapster
-- Optimized backend services
-- Scalable and modular architecture
+### 📊 Role-Based Dashboards
 
-### 🔔 Smart Notifications
-- Real-time activity alerts
-- Task assignment notifications
-- Grouped notifications for better focus
+| Role | Capabilities |
+|------|-------------|
+| 👨‍💼 **Admin** | System overview, user management, platform insights |
+| 🧑‍💻 **Manager** | Assign & monitor tasks, team performance tracking |
+| 👨‍💻 **Employee** | View assigned tasks, update progress, track deadlines |
 
 ### 💬 Collaboration Hub
-- Chat-based task discussions (WhatsApp-style)
-- Chronological messaging
+- WhatsApp-style chat for task discussions
+- Real-time activity alerts via SignalR
+- Task assignment notifications with grouping
 - File sharing support
-
-### 📊 Dynamic Dashboards
-#### 👨‍💼 Admin
-- System overview
-- User management
-- Platform insights
-
-#### 🧑‍💻 Manager
-- Assign and monitor tasks
-- Team performance tracking
-
-#### 👨‍💻 Employee
-- View assigned tasks
-- Update progress
-- Track deadlines
 
 ### 🎓 LMS Integration
 - Course management system
 - Progress tracking
 - Automatic certificate generation
 
+### 💎 UI/UX
+- Glassmorphism components with micro-animations
+- Dynamic light/dark theme switching
+- Responsive design across devices
+
+---
+
+## 🏗️ Architecture
+
 ```
 PROJECT-HUB/
-├── BACKEND/ # ASP.NET Core Web API
-│   └── ProjectHubAPI/ # Main API Project
-├── FRONTEND/ # Angular Application
-│   └── projecthub-ui/ # Angular CLI Project
+├── BACKEND/
+│   └── ProjectHubAPI/
+│       ├── Controllers/       # API endpoints
+│       ├── DTOs/              # Data Transfer Objects
+│       ├── Data/              # DbContext & migrations
+│       ├── Hubs/              # SignalR real-time hubs
+│       ├── Mapping/           # Mapster profiles
+│       ├── Middleware/        # Custom middleware
+│       ├── Models/            # Domain entities
+│       ├── Services/          # Business logic
+│       ├── Validators/        # FluentValidation
+│       └── wwwroot/uploads/   # File storage
+│
+├── FRONTEND/
+│   └── projecthub-ui/
+│       └── src/app/
+│           ├── components/    # UI components
+│           ├── guards/        # Route guards
+│           ├── interceptors/  # HTTP interceptors (JWT)
+│           ├── models/        # TypeScript interfaces
+│           ├── pipes/         # Custom pipes
+│           ├── services/      # API services
+│           └── shared/        # Shared modules
+│
 └── README.md
 ```
 
-💎 Current State
-ProjectHub has undergone a significant refactoring and enhancement phase to improve overall quality, scalability, and maintainability.
+---
 
-✨ Improvements
-1. Clean Naming: Context-based meaningful variable and function names
-2. Modular Architecture: Large components and services broken into reusable modules
-3. Improved Code Readability: Structured and well-organized codebase
-4. Optimized Performance: Efficient API handling and reduced overhead
-5. Better Documentation: Clear comments and structured explanations
-6. Scalable Design: Follows clean architecture principles for future expansion
+## ⚙️ Tech Stack
 
-🤝 Contribution
-Contributions are welcome!
-Fork the repository
-Create a branch
-Commit changes
-Submit a Pull Request 🚀
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Angular, TypeScript, CSS Animations |
+| Backend | ASP.NET Core Web API |
+| Auth | JWT + BCrypt + RBAC |
+| Real-time | SignalR |
+| ORM | Entity Framework Core |
+| Mapping | Mapster |
+| Validation | FluentValidation |
+| Testing | xUnit (ProjectHubAPI.Tests) |
 
-👩‍💻 Author
-Sangamithra P
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [Node.js 18+](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- SQL Server (or update connection string for your DB)
+
+### Backend Setup
+
+```bash
+cd BACKEND/ProjectHubAPI
+dotnet restore
+dotnet ef database update
+dotnet run
+```
+
+API runs at: `https://localhost:7001`
+
+### Frontend Setup
+
+```bash
+cd FRONTEND/projecthub-ui
+npm install
+ng serve
+```
+
+App runs at: `http://localhost:4200`
+
+---
+
+## 🧪 Running Tests
+
+```bash
+cd BACKEND/ProjectHubAPI.Tests
+dotnet test
+```
+
+---
+
+## 👩‍💻 Author
+
+**Sangamithra P**
+
+---
+

@@ -1,3 +1,5 @@
+# ProjectHub 🚀
+
 ProjectHub is a premium, elite-standard task management and collaboration platform built for seamless team coordination. It delivers a modern, high-performance experience with advanced UI design, secure architecture, and scalable backend systems.
 
 ### 💎 Elite UI/UX
@@ -50,13 +52,10 @@ ProjectHub is a premium, elite-standard task management and collaboration platfo
 ```
 PROJECT-HUB/
 ├── BACKEND/ # ASP.NET Core Web API
-│ ├── Mapping/ # Mapster Configurations
-│ ├── Controllers/ # API Endpoints
-│ ├── Services/ # Business Logic
-│ └── Data/ # DB Context & Migrations
-│ └── FRONTEND/ # Angular Application
-├── src/app/ # Components & Logic
-└── src/assets/ # UI Tokens & Design Assets
+│   └── ProjectHubAPI/ # Main API Project
+├── FRONTEND/ # Angular Application
+│   └── projecthub-ui/ # Angular CLI Project
+└── README.md
 ```
 
 💎 Current State

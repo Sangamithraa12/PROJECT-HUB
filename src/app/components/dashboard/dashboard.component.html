@@ -1,0 +1,213 @@
+<div class="dashboard-container">
+  
+  <app-sidebar></app-sidebar>
+
+  
+  <main class="main-content">
+    <app-navbar></app-navbar>
+
+    <div class="stats-grid">
+      <ng-container *ngIf="isLoadingStats || isLoadingTasks; else statsLoaded">
+        <div class="stat-card skeleton" *ngFor="let i of [1,2,3,4]" style="height: 100px;"></div>
+      </ng-container>
+      <ng-template #statsLoaded>
+        <div class="stat-card" appRipple (click)="navigateToDetails('projects')" role="button" tabindex="0">
+          <div class="stat-icon purple">📁</div>
+          <div class="stat-info">
+            <h3>Total Projects</h3>
+            <p class="stat-value">{{ stats.projects }}</p>
+          </div>
+        </div>
+        <div class="stat-card" appRipple (click)="navigateToDetails('active')" role="button" tabindex="0">
+          <div class="stat-icon blue">📝</div>
+          <div class="stat-info">
+            <h3>Active Tasks</h3>
+            <p class="stat-value">{{ stats.tasks }}</p>
+          </div>
+        </div>
+        <div class="stat-card" appRipple (click)="navigateToDetails('completed')" role="button" tabindex="0">
+          <div class="stat-icon green">🎯</div>
+          <div class="stat-info">
+            <h3>Completed</h3>
+            <p class="stat-value">{{ stats.completedTasks }}</p>
+          </div>
+        </div>
+        <div class="stat-card" appRipple (click)="navigateToDetails('pending')" role="button" tabindex="0">
+          <div class="stat-icon orange">⏳</div>
+          <div class="stat-info">
+            <h3>Pending</h3>
+            <p class="stat-value">{{ stats.pendingTasks }}</p>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="dashboard-main-grid">
+      <div class="primary-column">
+        <section class="role-view">
+
+
+
+          <div *ngIf="userRole === 'Employee'" class="employee-section animate-fade">
+            <div class="section-header">
+              <h2>My Assignments</h2>
+              <a routerLink="/tasks" class="btn-text">View All Tasks →</a>
+            </div>
+            
+            <div class="tasks-mini-list" *ngIf="!isLoadingTasks; else tasksSkeleton">
+              <div *ngIf="myTasks.length > 0; else noTasks">
+                <div *ngFor="let task of myTasks.slice(0, 5)" class="task-mini-card animate-fade">
+                  <div class="task-mini-info">
+                    <span class="task-status-dot" [class]="task.status?.toLowerCase() || 'pending'"></span>
+                    <div class="task-mini-details">
+                      <h4>{{ task.title }}</h4>
+                      <p>{{ task.projectName }}</p>
+                    </div>
+                  </div>
+                  <div class="task-mini-meta">
+                    <span class="status-badge" [class]="task.status?.toLowerCase() || 'pending'">{{ task.status }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #tasksSkeleton>
+              <div class="tasks-mini-list">
+                <div *ngFor="let i of [1,2,3]" class="task-mini-card skeleton" style="height: 60px; margin-bottom: 10px;"></div>
+              </div>
+            </ng-template>
+
+
+            <div class="learning-section-header">
+              <h2>My Learning</h2>
+              <a routerLink="/courses" class="btn-text">View All Courses →</a>
+            </div>
+            
+            <div class="learning-grid" *ngIf="!isLoadingLearning; else learningSkeleton">
+              <div *ngIf="myEnrollments.length > 0; else noLearning">
+                <div *ngFor="let enrollment of myEnrollments.slice(0, 4)" class="learning-mini-card animate-fade">
+                  <div class="learning-card-inner" [routerLink]="['/courses', enrollment.courseId]">
+                    <div class="course-mini-thumb">
+                      <img [src]="enrollment.thumbnailUrl" [alt]="enrollment.courseTitle">
+                      <div class="thumb-overlay">
+                        <span class="play-btn">▶</span>
+                      </div>
+                      <div class="mandatory-badge" *ngIf="enrollment.isMandatory">REQUIRED</div>
+                    </div>
+                    <div class="learning-info">
+                      <div class="learning-top-row">
+                        <h4>{{ enrollment.courseTitle }}</h4>
+                        <span class="due-date-label" *ngIf="enrollment.isMandatory && !enrollment.isCompleted">
+                          {{ getDaysRemaining(enrollment.dueDate) }}
+                        </span>
+                      </div>
+                      <div class="progress-container">
+                        <div class="progress-bar-track">
+                          <div class="progress-bar-fill" [style.width.%]="enrollment.progressPercentage"></div>
+                        </div>
+                        <span class="progress-pct">{{ enrollment.progressPercentage }}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #learningSkeleton>
+              <div class="learning-grid">
+                <div *ngFor="let i of [1,2]" class="learning-mini-card skeleton" style="height: 150px;"></div>
+              </div>
+            </ng-template>
+
+            <ng-template #noLearning>
+              <div class="placeholder-card">
+                <p>Start your learning journey today! 🚀</p>
+              </div>
+            </ng-template>
+
+            <ng-template #noTasks>
+              <div class="placeholder-card">
+                <p>You have no active assignments. Enjoy your day! 🌟</p>
+              </div>
+            </ng-template>
+          </div>
+
+
+          <div *ngIf="userRole === 'Manager' || userRole === 'Admin'" class="manager-section animate-fade">
+            <div class="section-header">
+              <h2>Team Learning Overview</h2>
+            </div>
+
+            <div class="analytics-row" *ngIf="teamStats">
+
+              <div class="analytics-card glass-card">
+                <div class="card-title">Group Completion</div>
+                <div class="completion-visual">
+                  <div class="radial-progress" [style.--progress]="teamStats.completionRate + '%'">
+                    <span class="pct-value">{{ teamStats.completionRate }}%</span>
+                  </div>
+                </div>
+                <p class="card-desc">{{ teamStats.completedEnrollments }} out of {{ teamStats.totalEnrollments }} courses finished</p>
+              </div>
+
+
+              <div class="analytics-card glass-card">
+                <div class="card-title">Popular Tracks</div>
+                <div class="popular-list">
+                  <div *ngFor="let item of teamStats.popularCourses" class="popular-item">
+                    <span class="pop-title">{{ item.title }}</span>
+                    <span class="pop-count">{{ item.enrollmentCount }} Enrolled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="leaderboard-section" *ngIf="teamStats?.topLearners?.length">
+              <div class="section-header">
+                <h2>Top Talent 🌟</h2>
+              </div>
+              <div class="talent-grid">
+                <div *ngFor="let learner of teamStats.topLearners; let i = index" class="talent-card glass-card">
+                  <div class="talent-rank">#{{ i + 1 }}</div>
+                  <div class="talent-info">
+                    <h4>{{ learner.name }}</h4>
+                    <div class="talent-stats">
+                      <span>🏆 {{ learner.completions }} Courses</span>
+                      <span>🎯 {{ learner.avgScore }}% Avg</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="achievements-section" *ngIf="teamAchievements.length > 0">
+              <div class="section-header">
+                <h2>Recent Team Achievements 🎖️</h2>
+              </div>
+              <div class="achievements-list">
+                <div *ngFor="let ach of teamAchievements.slice(0, 5)" class="achievement-mini-card glass-card">
+                  <div class="ach-icon">🎖️</div>
+                  <div class="ach-details">
+                    <div class="ach-title-row">
+                      <span class="ach-user"><strong>{{ ach.userName }}</strong></span>
+                      <span class="ach-date">{{ ach.completionDate | date:'mediumDate' }}</span>
+                    </div>
+                    <p class="ach-course">Earned certification in <strong>{{ ach.courseTitle }}</strong></p>
+                    <div class="ach-meta">
+                      <span class="ach-score">Pass Score: {{ ach.quizScore }}%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="secondary-column">
+        <app-leaderboard></app-leaderboard>
+      </div>
+    </div>
+  </main>
+</div>
+

@@ -1,0 +1,168 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content" *ngIf="!isLoading; else loading">
+    <div class="course-layout" *ngIf="course">
+      
+      <!-- Header Section -->
+      <header class="hero-section">
+        <nav class="breadcrumb">
+          <a routerLink="/courses">Learning Center</a>
+          <span>/</span>
+          <span style="opacity: 0.6;">{{ course.category }}</span>
+        </nav>
+        <h1 class="course-title">{{ course.title }}</h1>
+      </header>
+
+      <!-- Main Content Area -->
+      <div class="content-grid">
+        
+        <!-- Video Stage -->
+        <div class="video-stage">
+          <iframe *ngIf="safeVideoUrl" [src]="safeVideoUrl" frameborder="0" allowfullscreen></iframe>
+          <video *ngIf="!safeVideoUrl && course.videoUrl && !course.videoUrl.includes('youtube.com')" 
+                 controls [src]="course.videoUrl"></video>
+          <div *ngIf="!safeVideoUrl && !course.videoUrl" class="video-placeholder">
+            <i class="fas fa-play-circle"></i>
+            <p>Video Lesson Not Available</p>
+          </div>
+        </div>
+
+        <!-- Module Content Card -->
+        <article class="elite-card animate-slide-up">
+          <div class="card-label">
+            <i class="fas fa-book-open"></i>
+            <span>Module Overview</span>
+          </div>
+          
+          <div *ngIf="activeModule" class="module-view">
+            <h2 class="module-content-title">{{ activeModule.title }}</h2>
+            <div class="module-text" [innerHTML]="activeModule.content! | safeHtml"></div>
+            
+            <button class="elite-button btn-primary-glow" 
+                    *ngIf="enrollment && !isActiveModuleCompleted" 
+                    (click)="markModuleComplete()"
+                    style="margin-top: 2rem; width: auto;">
+              <i class="fas fa-check-circle"></i>
+              Mark Module as Complete
+            </button>
+          </div>
+
+          <div *ngIf="!activeModule" class="module-view">
+            <h2 class="module-content-title">About this Course</h2>
+            <p class="module-text">{{ course.description }}</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Right Sidebar -->
+      <aside class="sidebar-sticky animate-slide-up">
+        
+        <!-- Progress Widget -->
+        <section class="elite-card progress-widget" *ngIf="enrollment">
+          <div class="card-label" style="justify-content: center;">
+            <span>Your Mastery</span>
+          </div>
+          
+          <div class="progress-ring" [style.--progress]="enrollment.progressPercentage + '%'">
+            <div class="progress-value">{{ enrollment.progressPercentage }}%</div>
+          </div>
+          
+          <div class="action-stack" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button class="elite-button btn-primary-glow" (click)="startQuiz()">
+              <i class="fas fa-graduation-cap"></i>
+              {{ enrollment.isCompleted ? 'View Final Result' : 'Take Certification Exam' }}
+            </button>
+            <a class="elite-button btn-secondary-outline" *ngIf="enrollment.isCompleted" routerLink="/certificates" style="text-decoration: none;">
+              <i class="fas fa-award"></i>
+              Download Certificate
+            </a>
+          </div>
+        </section>
+
+        <!-- Enrollment Action (if not enrolled) -->
+        <section class="elite-card" *ngIf="!enrollment" style="text-align: center;">
+          <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Ready to Start?</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Join thousands of employees mastering {{ course.category }}.</p>
+          <button class="elite-button btn-primary-glow" (click)="enroll()">Enroll Now</button>
+        </section>
+
+        <!-- Curriculum Widget -->
+        <section class="elite-card" style="padding: 1.5rem;">
+          <div class="card-label">Curriculum</div>
+          <div class="modules-scroll">
+            <div class="curriculum-list">
+              <div class="module-item" *ngFor="let mod of course.modules; let i = index" 
+                   [class.active]="activeModule?.id === mod.id"
+                   [class.completed]="enrollment?.completedModuleIds?.includes(mod.id)"
+                   (click)="selectModule(mod)">
+                <div class="status-indicator">
+                  <i *ngIf="enrollment?.completedModuleIds?.includes(mod.id)" class="fas fa-check"></i>
+                  <span *ngIf="!enrollment?.completedModuleIds?.includes(mod.id)">{{ i + 1 }}</span>
+                </div>
+                <div class="module-title">{{ mod.title }}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Admin Professional Toolkit -->
+        <section class="elite-card admin-toolkit" *ngIf="isManager()">
+          <div class="admin-header">Manager Toolkit</div>
+          <div class="admin-input-group">
+            <input type="text" #ytUrl placeholder="Update Lesson URL..." class="admin-input">
+            <button (click)="updateYouTubeUrl(ytUrl.value)" class="elite-button btn-secondary-outline" style="font-size: 0.75rem;">Update URL</button>
+            
+            <textarea #quizJson placeholder="Set Quiz JSON..." class="admin-input" style="min-height: 80px; font-family: monospace;"></textarea>
+            <button (click)="updateQuizData(quizJson.value)" class="elite-button btn-secondary-outline" style="font-size: 0.75rem;">Update Exam</button>
+          </div>
+        </section>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Immersive Quiz Overlay -->
+  <div class="quiz-overlay animate-fade" *ngIf="showQuiz">
+    <div class="quiz-card" *ngIf="quizQuestions.length > 0; else noQuiz">
+      <div class="quiz-header">
+        <div style="font-weight: 900; letter-spacing: 1px; color: var(--primary);">CERTIFICATION EXAM</div>
+        <button (click)="showQuiz = false" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size: 1.5rem;">&times;</button>
+      </div>
+
+      <div class="progress-dots" style="margin-bottom: 2rem;">
+        <div *ngFor="let q of quizQuestions; let i = index" class="dot" [class.active]="i === quizStep"></div>
+      </div>
+
+      <div *ngIf="quizStep < quizQuestions.length">
+        <div class="question-text">{{ quizQuestions[quizStep].question }}</div>
+        <div class="options-grid">
+          <button *ngFor="let opt of quizQuestions[quizStep].options" (click)="answerQuiz(opt.isCorrect)" class="option-btn">
+            {{ opt.text }}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noQuiz>
+      <div class="quiz-card" style="text-align: center; padding: 4rem 2rem;">
+        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--primary); margin-bottom: 1.5rem;"></i>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Exam Unavailable</h3>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">The certification exam for this course hasn't been configured yet.</p>
+        <button (click)="showQuiz = false" class="elite-button btn-primary-glow" style="width: auto; margin: 0 auto; padding: 1rem 3rem;">Close</button>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Skeleton Loading -->
+  <ng-template #loading>
+    <div class="main-content" style="align-items: center; justify-content: center;">
+      <div class="spinner" style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      <p style="margin-top: 1.5rem; letter-spacing: 1px; font-weight: 700; color: var(--text-muted);">INITIALizing LEARNING ENVIRONMENT...</p>
+    </div>
+  </ng-template>
+</div>
+
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>

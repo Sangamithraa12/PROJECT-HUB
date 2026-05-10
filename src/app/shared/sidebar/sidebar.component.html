@@ -1,0 +1,87 @@
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-left">
+      <div class="logo-orb-sm"></div>
+      <h2>ProjectHub</h2>
+    </div>
+  </div>
+
+  <nav class="nav-links" [class.chat-open]="chatIsOpen">
+    <a (click)="navigateTo('/dashboard')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/dashboard')">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a (click)="navigateTo('/projects')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/projects')">
+      <span class="icon">📁</span> Projects
+    </a>
+    <a (click)="navigateTo('/tasks')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/tasks')">
+      <span class="icon">✅</span> Tasks
+    </a>
+    <a (click)="navigateTo('/courses')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/courses')">
+      <span class="icon">📚</span> Courses
+    </a>
+    <a (click)="navigateTo('/certificates')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/certificates')">
+      <span class="icon">🏆</span> Certificates
+    </a>
+    <a (click)="openAi()" class="nav-item assistant-link" [class.active]="chatIsOpen && activeChatMode === 'ai'">
+      <span class="icon">🤖</span> AI Assistant
+    </a>
+    <a (click)="openTeam()" class="nav-item chat-link" [class.active]="chatIsOpen && (activeChatMode === 'dm' || activeChatMode === 'task')">
+      <span class="icon">💬</span> Team Chat
+    </a>
+    <a *ngIf="userRole === 'Admin'" (click)="navigateTo('/users')" class="nav-item" [class.active]="!chatIsOpen && isRoute('/users')">
+      <span class="icon">👥</span> Users
+    </a>
+  </nav>
+
+  <div class="user-profile">
+    <div class="user-top">
+      <div class="user-info">
+        <p class="user-name">{{ userName }}</p>
+        <p class="user-role">{{ userRole }}</p>
+      </div>
+      
+      <div class="user-actions">
+        <div class="notification-trigger">
+          <button class="btn-bell" (click)="toggleNotifications()" [class.has-unread]="(unreadCount$ | async)! > 0">
+            🔔
+            <span class="unread-badge" *ngIf="(unreadCount$ | async)! > 0">{{ unreadCount$ | async }}</span>
+          </button>
+
+          <div class="notification-dropdown glass-panel" *ngIf="showNotifications">
+            <div class="notif-header">
+              <h3>Notifications</h3>
+              <div class="notif-actions">
+                <button (click)="markAllAsRead()" class="btn-mark-all">Mark all read</button>
+                <button (click)="toggleNotifications()" class="btn-close-notif" title="Close">✕</button>
+              </div>
+            </div>
+            <div class="notif-list">
+              <div *ngIf="(notifications$ | async)?.length === 0" class="notif-empty">
+                No notifications yet
+              </div>
+              <div *ngFor="let n of (notifications$ | async)" 
+                   class="notif-item" 
+                   [class.unread]="!n.isRead"
+                   (click)="handleNotificationClick(n)">
+                <div class="notif-icon">{{ n.type === 'Chat' ? '💬' : n.type === 'Task' ? '📋' : '✨' }}</div>
+                <div class="notif-content">
+                  <p class="notif-title">{{ n.title }}</p>
+                  <p class="notif-msg">{{ n.message }}</p>
+                  <span class="notif-time">{{ n.createdAt | date:'shortTime' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button (click)="toggleTheme()" class="btn-theme-circle" title="Switch Theme">
+          🌓
+        </button>
+      </div>
+    </div>
+    
+    <button (click)="logout()" class="btn-logout-full">
+      Logout
+    </button>
+  </div>
+</aside>

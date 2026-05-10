@@ -1,0 +1,41 @@
+<nav class="top-navbar glass-card">
+  <div class="nav-left">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search tasks, projects...">
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <!-- AI Assistant Icon -->
+    <div class="nav-action-item" (click)="openAi()" title="AI Assistant">
+      <div class="icon-wrapper ai-icon-wrap">
+        <span class="icon">✨</span>
+      </div>
+    </div>
+
+    <!-- Instagram Style Chat Icon -->
+    <div class="nav-action-item" (click)="openChat()" title="Team Messages">
+      <div class="icon-wrapper chat-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="insta-chat-svg">
+          <path d="M12 3C7.02944 3 3 6.58172 3 11C3 13.1235 3.91429 15.0564 5.41421 16.4142L5 21L10.5 19.5C11 19.8 11.5 20 12 20C16.9706 20 21 16.4183 21 12C21 7.58172 16.9706 4 12 4L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+      </div>
+    </div>
+
+    <div class="nav-action-item" (click)="toggleNotifications()" title="Notifications">
+      <div class="icon-wrapper">
+        <span class="icon">🔔</span>
+        <span class="nav-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </div>
+    </div>
+
+    <div class="user-dropdown-trigger">
+      <div class="avatar-sm">
+        {{ userName.substring(0,1) || 'U' }}
+      </div>
+      <span class="user-name-text">{{ userName }}</span>
+    </div>
+  </div>
+</nav>

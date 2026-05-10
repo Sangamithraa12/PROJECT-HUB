@@ -1,0 +1,214 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="header-left">
+        <h1>Learning Center</h1>
+        <p class="date">Enhance your skills with professional courses</p>
+      </div>
+      <button *ngIf="userRole === 'Admin' || userRole === 'Manager'" (click)="openCreateModal()" class="btn-primary-sm">
+        + Create Course
+      </button>
+    </header>
+
+    <div class="courses-grid animate-fade" *ngIf="courses.length > 0; else noCourses">
+      <div *ngFor="let course of courses" class="course-card" (click)="goToDetails(course.id, $event)">
+        <div class="course-thumbnail">
+          <img [src]="course.thumbnailUrl || 'https://via.placeholder.com/320x180?text=Course+Thumbnail'" [alt]="course.title">
+          <span class="category-tag">{{ course.category }}</span>
+          
+          <div class="management-overlay" *ngIf="userRole === 'Admin' || userRole === 'Manager'">
+            <button (click)="openAssignModal(course)" class="btn-icon assign" title="Assign to Team">👥</button>
+            <button (click)="openEditModal(course)" class="btn-icon" title="Edit Course">✎</button>
+            <button (click)="deleteCourse(course.id)" class="btn-icon delete" title="Delete Course">🗑️</button>
+          </div>
+        </div>
+        
+        <div class="course-content">
+          <div class="course-meta">
+            <span class="duration">⏱ {{ course.duration }}</span>
+          </div>
+          <h3>{{ course.title }}</h3>
+          <p class="description">{{ course.description }}</p>
+          
+          <div class="course-actions">
+            <button *ngIf="!isEnrolled(course.id)" (click)="enroll(course.id)" class="btn-enroll">
+              Enroll Now
+            </button>
+            <button *ngIf="isEnrolled(course.id)" class="btn-continue" disabled>
+              Enrolled ✓
+            </button>
+            <button class="btn-details" [routerLink]="['/courses', course.id]">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="showCreateModal" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h2>Create New Course</h2>
+          <button (click)="showCreateModal = false" class="btn-close">✕</button>
+        </div>
+        <form (ngSubmit)="createCourse()">
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Course Title</label>
+              <input type="text" [(ngModel)]="newCourse.title" name="title" required placeholder="e.g., Mastering Cloud Architecture">
+            </div>
+            <div class="input-group">
+              <label>Category</label>
+              <select [(ngModel)]="newCourse.category" name="category" required>
+                <option value="Development">Development</option>
+                <option value="Design">Design</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Business">Business</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Thumbnail URL</label>
+            <input type="text" [(ngModel)]="newCourse.thumbnailUrl" name="thumbnailUrl" placeholder="Image URL (Pexels, Unsplash, etc.)">
+          </div>
+          <div class="input-group">
+            <label>Duration</label>
+            <input type="text" [(ngModel)]="newCourse.duration" name="duration" placeholder="e.g., 10 Hours">
+          </div>
+          <div class="input-group">
+            <label>Description</label>
+            <textarea [(ngModel)]="newCourse.description" name="description" rows="2" placeholder="Brief overview of the course..."></textarea>
+          </div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Video URL (YouTube)</label>
+              <input type="text" [(ngModel)]="newCourse.videoUrl" name="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
+            </div>
+            <div class="input-group">
+              <label>Resource URL</label>
+              <input type="text" [(ngModel)]="newCourse.resourceUrl" name="resourceUrl" placeholder="Link to documentation or files">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Quiz Data (JSON Format)</label>
+            <textarea [(ngModel)]="newCourse.quizData" name="quizData" rows="3" placeholder='[{"question": "...", "options": [{"text": "...", "isCorrect": true}]}]'></textarea>
+            <small class="hint">Paste your JSON quiz structure here.</small>
+          </div>
+          <div class="modal-actions">
+            <button type="button" (click)="showCreateModal = false" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="isSaving">
+              {{ isSaving ? 'Creating...' : 'Create Course' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="showEditModal" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h2>Edit Course</h2>
+          <button (click)="showEditModal = false" class="btn-close">✕</button>
+        </div>
+        <form (ngSubmit)="updateCourse()">
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Course Title</label>
+              <input type="text" [(ngModel)]="editingCourse.title" name="title" required>
+            </div>
+            <div class="input-group">
+              <label>Category</label>
+              <select [(ngModel)]="editingCourse.category" name="category" required>
+                <option value="Development">Development</option>
+                <option value="Design">Design</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Business">Business</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Thumbnail URL</label>
+            <input type="text" [(ngModel)]="editingCourse.thumbnailUrl" name="thumbnailUrl">
+          </div>
+          <div class="input-group">
+            <label>Duration</label>
+            <input type="text" [(ngModel)]="editingCourse.duration" name="duration">
+          </div>
+          <div class="input-group">
+            <label>Description</label>
+            <textarea [(ngModel)]="editingCourse.description" name="description" rows="2"></textarea>
+          </div>
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Video URL (YouTube)</label>
+              <input type="text" [(ngModel)]="editingCourse.videoUrl" name="videoUrl">
+            </div>
+            <div class="input-group">
+              <label>Resource URL</label>
+              <input type="text" [(ngModel)]="editingCourse.resourceUrl" name="resourceUrl">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Quiz Data (JSON Format)</label>
+            <textarea [(ngModel)]="editingCourse.quizData" name="quizData" rows="3"></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" (click)="showEditModal = false" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="isSaving">
+              {{ isSaving ? 'Saving Changes...' : 'Save Changes' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <ng-template #noCourses>
+      <div class="placeholder-card" *ngIf="!isLoadingAll">
+        <p>No courses available at the moment. Check back later! 📚</p>
+      </div>
+      <div class="placeholder-card" *ngIf="isLoadingAll">
+        <p>Loading course content...</p>
+      </div>
+    </ng-template>
+
+
+    <div *ngIf="showAssignModal" class="modal-overlay">
+      <div class="modal-content glass-card assignment-modal">
+        <div class="modal-header">
+          <h2>Assign Course to Team</h2>
+          <button (click)="showAssignModal = false" class="btn-close">✕</button>
+        </div>
+        <p class="modal-subtitle">Pick a team member and set a completion deadline.</p>
+        
+        <form (ngSubmit)="submitAssignment()">
+          <div class="input-group">
+            <label>Select Team Member</label>
+            <select [(ngModel)]="assignmentData.userId" name="targetUserId" required>
+              <option value="0" disabled>-- Choose an Employee --</option>
+              <option *ngFor="let user of users" [value]="user.id">
+                {{ user.name }} ({{ user.roleName }})
+              </option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label>Due Date</label>
+            <input type="date" [(ngModel)]="assignmentData.dueDate" name="dueDate" required>
+          </div>
+
+          <div class="assignment-notice">
+            <p>ℹ️ This course will be marked as <strong>Required</strong> for the employee.</p>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" (click)="showAssignModal = false" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="isSaving || !assignmentData.userId || !assignmentData.dueDate">
+              {{ isSaving ? 'Assigning...' : 'Assign Course' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>

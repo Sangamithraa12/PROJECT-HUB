@@ -1,0 +1,32 @@
+<div class="leaderboard-card glass-card">
+  <div class="card-header">
+    <h3>Top Learners</h3>
+    <span class="badge-count">{{ leaderboard.length }} Rankers</span>
+  </div>
+
+  <div class="leaderboard-list">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner-sm"></div>
+    </div>
+
+    <div *ngFor="let user of leaderboard; let i = index" class="leaderboard-item animate-fade" [class.top-3]="i < 3">
+      <div class="rank">{{ getRankIcon(i) }}</div>
+      <div class="user-info">
+        <span class="user-name">{{ user.userName }}</span>
+        <div class="user-stats">
+          <span class="stat">🎓 {{ user.coursesCompleted }} Courses</span>
+          <span class="stat">🔥 {{ user.avgQuizScore | number:'1.0-0' }}% Quiz Avg</span>
+        </div>
+      </div>
+      <div class="total-progress">
+        <div class="progress-ring">
+          <span>{{ user.totalProgress }} XP</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && leaderboard.length === 0" class="empty-state">
+      No learning data found yet. Start a course to be the first!
+    </div>
+  </div>
+</div>

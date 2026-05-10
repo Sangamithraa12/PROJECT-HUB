@@ -1,0 +1,86 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="header-left">
+        <h1>Projects</h1>
+        <p class="date">Manage your organization's projects</p>
+      </div>
+      <button *ngIf="userRole === 'Manager' || userRole === 'Admin'" (click)="showCreateModal = true" class="btn-primary-sm">
+        + New Project
+      </button>
+    </header>
+
+    <div class="projects-grid animate-fade">
+      <div *ngFor="let project of projects" class="project-card glass-card" (click)="viewProject(project.id)">
+        <div class="project-header">
+          <div class="project-icon">📁</div>
+          <div class="project-actions" *ngIf="userRole === 'Manager' || userRole === 'Admin'">
+            <button (click)="openEditModal(project); $event.stopPropagation()" class="btn-icon">✎</button>
+            <button (click)="deleteProject(project.id); $event.stopPropagation()" class="btn-icon delete">🗑️</button>
+          </div>
+        </div>
+        <h3>{{ project.name }}</h3>
+        <p class="description">{{ project.description || 'No description provided.' }}</p>
+        <div class="project-footer" *ngIf="project.dueDate">
+          <span class="due-date">
+            <span class="icon">📅</span>
+            Due: {{ project.dueDate | date:'mediumDate' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  
+  <div *ngIf="showCreateModal" class="modal-overlay">
+    <div class="modal-content glass-card">
+      <h2>Create New Project</h2>
+      <form (ngSubmit)="createProject()">
+        <div class="input-group">
+          <label>Project Name</label>
+          <input type="text" [(ngModel)]="newProject.name" name="name" required placeholder="e.g., Marketing Campaign">
+        </div>
+        <div class="input-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="newProject.description" name="description" placeholder="Project goals and details..."></textarea>
+        </div>
+        <div class="input-group">
+          <label>Due Date</label>
+          <input type="date" [(ngModel)]="newProject.dueDate" name="dueDate">
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="showCreateModal = false" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isProcessing">Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <div *ngIf="showEditModal" class="modal-overlay">
+    <div class="modal-content glass-card">
+      <h2>Edit Project</h2>
+      <form (ngSubmit)="updateProject()">
+        <div class="input-group">
+          <label>Project Name</label>
+          <input type="text" [(ngModel)]="editingProject.name" name="name" required>
+        </div>
+        <div class="input-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="editingProject.description" name="description"></textarea>
+        </div>
+        <div class="input-group">
+          <label>Due Date</label>
+          <input type="date" [(ngModel)]="editingProject.dueDate" name="dueDate">
+        </div>
+        <div class="modal-actions">
+          <button type="button" (click)="showEditModal = false" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isProcessing">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

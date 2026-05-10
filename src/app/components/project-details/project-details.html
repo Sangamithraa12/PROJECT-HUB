@@ -1,0 +1,291 @@
+<div class="project-detail-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content" *ngIf="!isLoading; else loading">
+    <header class="content-header">
+      <div class="header-breadcrumb">
+        <a routerLink="/projects" class="back-link">← All Projects</a>
+      </div>
+      <div class="header-main">
+        <div class="header-title-row">
+          <h1>{{ project?.name }}</h1>
+          <div class="status-tags">
+            <span class="elite-badge" [ngClass]="getPriorityClass()">
+              {{ getDaysRemaining() <= 3 ? '🔥 Urgent' : '⚡ Active' }}
+            </span>
+            <span class="elite-badge status" *ngIf="project?.status">{{ project?.status }}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Phase 10: Elite Stats Grid -->
+    <div class="stats-overview-grid animate-fade">
+      <div class="stat-card glass-card-inset clickable" (click)="scrollToTasks()">
+        <div class="stat-icon tasks">📋</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ getTaskStats().total }}</span>
+          <span class="stat-label">Total Tasks</span>
+        </div>
+        <div class="card-indicator">↴</div>
+      </div>
+      <div class="stat-card glass-card-inset clickable" (click)="scrollToTasks()">
+        <div class="stat-icon progress">📈</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ getTaskStats().percentage }}%</span>
+          <span class="stat-label">Completion</span>
+        </div>
+        <div class="card-indicator">↴</div>
+      </div>
+      <div class="stat-card glass-card-inset clickable" (click)="openTeamDrawer()">
+        <div class="stat-icon team">👥</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ getTeamSize() }}</span>
+          <span class="stat-label">Team Members</span>
+        </div>
+        <div class="card-indicator">→</div>
+      </div>
+      <div class="stat-card glass-card-inset">
+        <div class="stat-icon deadline">⏳</div>
+        <div class="stat-info">
+          <span class="stat-value">{{ getDaysRemaining() }}</span>
+          <span class="stat-label">Days Left</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-linear-layout">
+      <section class="description-section glass-card animate-fade">
+        <div class="description-header">
+          <h3><span class="title-icon">📖</span> Project Insights</h3>
+          <div class="project-progress-container">
+            <div class="progress-info">
+              <span>Overall Progress</span>
+              <span>{{ getTaskStats().percentage }}%</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" [style.width.%]="getTaskStats().percentage"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="project-description-wrapper">
+          <p class="project-description alternate">{{ project?.description || 'No description provided for this project.' }}</p>
+        </div>
+      </section>
+
+      <section class="files-section glass-card animate-fade">
+        <div class="section-header">
+          <h3><span class="title-icon">📂</span> Project Resources</h3>
+          <div class="upload-actions" *ngIf="userRole === 'Employee' || userRole === 'Admin' || userRole === 'Manager'">
+              <label class="btn-outline-sm icon-btn">
+                  <span class="btn-icon">📄</span>
+                  <span>Upload File</span>
+                  <input type="file" (change)="onFileSelected($event)" hidden>
+              </label>
+              <label class="btn-outline-sm icon-btn">
+                  <span class="btn-icon">📁</span>
+                  <span>Upload Folder</span>
+                  <input type="file" (change)="onFolderSelected($event)" webkitdirectory directory multiple hidden>
+              </label>
+          </div>
+        </div>
+
+        <div *ngIf="isUploading" class="upload-status animate-pulse">
+          <div class="spinner-sm"></div>
+          <span>Processing and securing your resources...</span>
+        </div>
+
+        <div class="resource-list" *ngIf="project?.filesUrl">
+          <div class="resource-item glass-card-inset">
+            <div class="resource-icon">{{ isFolder(project?.filesUrl) ? '📁' : '📄' }}</div>
+            <div class="resource-info">
+              <h4>{{ getFileName(project?.filesUrl) }}</h4>
+              <p>{{ isFolder(project?.filesUrl) ? 'Shared Directory' : 'Project Document' }} • {{ isFolder(project?.filesUrl) ? 'Multiple Items' : 'Single Item' }}</p>
+            </div>
+            <a [href]="getFullUrl(project?.filesUrl)" target="_blank" class="download-link" *ngIf="project?.filesUrl">
+              <span class="btn-icon">⬇️</span> Download
+            </a>
+          </div>
+        </div>
+
+        <div class="empty-resources-v2" *ngIf="!project?.filesUrl && !isUploading">
+          <div class="empty-illustration">📁</div>
+          <h4>No resources yet</h4>
+          <p>Upload files or folders to get started with this project.</p>
+        </div>
+      </section>
+
+      <section class="tasks-section glass-card animate-fade" *ngIf="project?.tasks?.length">
+        <div class="section-header">
+          <div class="title-group">
+            <h3><span class="title-icon">🎯</span> Project Task Board</h3>
+            <p class="section-subtitle">Manage and track individual project milestones</p>
+          </div>
+        </div>
+
+        <div class="project-task-grid">
+          <div *ngFor="let task of project?.tasks" 
+               class="project-task-card glass-card-inset pulse-hover" 
+               (click)="openTaskDrawer(task)"
+               [class.priority-glow]="isHighPriorityTask(task)">
+            <div class="task-card-header">
+              <span class="priority-dot" [class.urgent]="isHighPriorityTask(task)"></span>
+              <span class="task-status-pills {{ task.status.toLowerCase().replace(' ', '-') }}">
+                {{ task.status }}
+              </span>
+            </div>
+            <h4 class="task-title">{{ task.title }}</h4>
+            <div class="task-card-footer">
+              <div class="task-assignee">
+                <span class="avatar-sm">👤</span>
+                <span>{{ task.assignedToName || 'Unassigned' }}</span>
+              </div>
+              <div class="task-action-hint">View Details →</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-resources-v2 small" *ngIf="!project?.tasks?.length">
+          <p>This project has no active tasks assigned.</p>
+        </div>
+      </section>
+
+      <!-- Task Proofs Sub-section (Enhanced Vertical Cards) -->
+      <section class="proofs-sub-section animate-fade" *ngIf="hasTaskProofs()">
+        <div class="sub-header">
+          <h4><span class="title-icon">📂</span> Submission Archives</h4>
+          <p class="section-subtitle">Verified task proofs and documentation</p>
+        </div>
+        <div class="project-task-grid archives">
+          <ng-container *ngFor="let task of project?.tasks">
+            <a *ngIf="task.proofUrl" 
+               [href]="getFullUrl(task.proofUrl)" 
+               target="_blank" 
+               class="project-task-card archival glass-card-inset pulse-hover">
+              <div class="task-card-header">
+                <span class="archival-badge">ARCHIVED</span>
+                <span class="file-type-icon">{{ isFolder(task.proofUrl) ? '📁' : '📄' }}</span>
+              </div>
+              <h4 class="task-title">{{ task.title }} Proof</h4>
+              <div class="task-card-footer">
+                <div class="task-assignee">
+                  <span class="avatar-sm">👤</span>
+                  <span>{{ task.assignedToName }}</span>
+                </div>
+                <div class="task-action-hint">Download →</div>
+              </div>
+            </a>
+          </ng-container>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Phase 11: Elite Task Explorer Side-Drawer -->
+  <div class="task-drawer-overlay" [class.active]="showTaskDrawer" (click)="closeTaskDrawer()">
+    <div class="task-explorer-drawer glass-card" (click)="$event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span class="drawer-icon">💎</span>
+          <h2>Task Explorer</h2>
+        </div>
+        <button class="close-drawer-btn" (click)="closeTaskDrawer()">✕ Close</button>
+      </div>
+
+      <div class="drawer-content" *ngIf="activeTask">
+        <!-- Task Info Card -->
+        <div class="explorer-task-info glass-card-inset">
+          <div class="info-top">
+            <span class="task-id">TASK #{{ activeTask.id }}</span>
+            <select [value]="activeTask.status" 
+                    (change)="updateTaskStatus($event)" 
+                    class="drawer-status-select"
+                    [disabled]="isUpdatingTaskStatus">
+              <option value="Pending">🕒 Pending</option>
+              <option value="In Progress">⚡ In Progress</option>
+              <option value="Completed">✅ Completed</option>
+            </select>
+          </div>
+          <h3>{{ activeTask.title }}</h3>
+          <p class="task-description">{{ activeTask.description || 'No detailed description available for this task.' }}</p>
+          
+          <div class="task-metadata-grid">
+            <div class="meta-item">
+              <span class="meta-label">Assignee</span>
+              <span class="meta-value">👤 {{ activeTask.assignedToName }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Deadline</span>
+              <span class="meta-value">📅 {{ activeTask.dueDate | date:'mediumDate' }}</span>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+  <div class="task-drawer-overlay" [class.active]="showTeamDrawer" (click)="closeTeamDrawer()">
+    <div class="task-explorer-drawer glass-card team-drawer" (click)="$event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span class="drawer-icon">👥</span>
+          <h2>Team Insights</h2>
+        </div>
+        <button class="close-drawer-btn" (click)="closeTeamDrawer()">✕ Close</button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="team-scroll-container custom-scrollbar">
+          <div *ngFor="let member of teamMetrics" class="team-member-report glass-card-inset">
+            <div class="member-top">
+              <div class="member-profile">
+                <span class="avatar-lg">👤</span>
+                <div class="member-name-group">
+                  <h4>{{ member.userName }}</h4>
+                  <span class="member-role">Project Contributor</span>
+                </div>
+              </div>
+              <div class="member-task-count">
+                <span class="count-value">{{ member.totalTasks }}</span>
+                <span class="count-label">Tasks</span>
+              </div>
+            </div>
+
+            <div class="member-progress-section">
+              <div class="progress-labels">
+                <span>Performance</span>
+                <span class="performance-percentage">{{ member.completionRate }}%</span>
+              </div>
+              <div class="progress-bar-track small">
+                <div class="progress-bar-fill" [style.width.%]="member.completionRate"></div>
+              </div>
+              <div class="progress-sub-stats">
+                <span>{{ member.completedTasks }} Completed</span>
+                <span>{{ member.totalTasks - member.completedTasks }} Remaining</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-team-v2" *ngIf="!teamMetrics.length">
+            <div class="empty-illustration">👥</div>
+            <h4>No team assignments yet</h4>
+            <p>Assign tasks to team members to see their performance insights here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading-full animate-fade">
+      <div class="spinner" *ngIf="!errorMessage"></div>
+      <p *ngIf="!errorMessage">Loading project details...</p>
+      <div class="error-state" *ngIf="errorMessage">
+          <div class="error-icon">⚠️</div>
+          <p class="error-msg">{{ errorMessage }}</p>
+          <button class="btn-primary" (click)="loadProjectDetails()">Retry</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

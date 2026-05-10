@@ -1,0 +1,58 @@
+<div class="login-page">
+  <div class="glass-card animate-fade-in">
+    <div class="brand">
+      <h1>ProjectHub</h1>
+      <p>Elevate your team productivity</p>
+    </div>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+      <div *ngIf="errorMessage" class="error-alert animate-shake">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <div class="input-group">
+
+        <label for="email">Email Address</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          [(ngModel)]="email" 
+          placeholder="Enter your email address" 
+          required 
+          #emailInput="ngModel"
+        >
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          [(ngModel)]="password" 
+          placeholder="••••••••" 
+          required
+        >
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn-primary" 
+        [disabled]="!loginForm.form.valid || isLoading"
+      >
+        <span *ngIf="!isLoading">Sign In</span>
+        <span *ngIf="isLoading" class="loading-spinner">
+          <i class="fas fa-circle-notch fa-spin"></i> Signing in...
+        </span>
+      </button>
+
+    </form>
+
+    <div class="glass-footer">
+      <p>Role-Based Management System</p>
+    </div>
+  </div>
+</div>
+

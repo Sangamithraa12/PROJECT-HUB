@@ -1,0 +1,64 @@
+<div class="my-courses-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1>My Learning Dashboard</h1>
+      <p class="subtitle">Track your progress and continue learning</p>
+      
+      <div class="tabs">
+        <button class="tab-btn" [class.active]="activeTab === 'all'" (click)="setTab('all')">All Courses</button>
+        <button class="tab-btn" [class.active]="activeTab === 'in-progress'" (click)="setTab('in-progress')">In Progress</button>
+        <button class="tab-btn" [class.active]="activeTab === 'completed'" (click)="setTab('completed')">Completed</button>
+      </div>
+    </header>
+
+    <div class="courses-grid" *ngIf="!isLoading; else loading">
+      
+      <div class="course-card glass-card animate-fade" *ngFor="let enrollment of filteredCourses">
+        <div class="course-thumbnail">
+          <img [src]="enrollment.thumbnailUrl || 'assets/default-course.jpg'" alt="Course Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80'">
+          <div class="status-badge" [class.completed]="enrollment.isCompleted">
+            {{ enrollment.isCompleted ? 'Completed' : 'In Progress' }}
+          </div>
+        </div>
+        
+        <div class="course-info">
+          <h3>{{ enrollment.courseTitle }}</h3>
+          
+          <div class="progress-section">
+            <div class="progress-details">
+              <span>{{ enrollment.completedModules }} / {{ enrollment.totalModules }} Modules</span>
+              <span>{{ enrollment.progressPercentage }}%</span>
+            </div>
+            <div class="progress-track" [class.completed]="enrollment.isCompleted">
+              <div class="progress-fill" [style.width.%]="enrollment.progressPercentage"></div>
+            </div>
+          </div>
+          
+          <div class="card-actions">
+            <button class="btn-primary" [routerLink]="['/course-details', enrollment.courseId]">
+              {{ enrollment.isCompleted ? 'Review Course' : 'Continue Learning' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="filteredCourses.length === 0">
+        <div class="empty-icon">📂</div>
+        <h3>No courses found</h3>
+        <p>You haven't enrolled in any courses for this category yet.</p>
+        <button class="btn-outline" routerLink="/courses">Browse Courses</button>
+      </div>
+      
+    </div>
+
+    <ng-template #loading>
+      <div class="loading-full">
+        <div class="spinner"></div>
+        <p>Loading your courses...</p>
+      </div>
+    </ng-template>
+
+  </main>
+</div>

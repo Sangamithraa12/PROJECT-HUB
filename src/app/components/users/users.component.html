@@ -1,0 +1,120 @@
+<div class="dashboard-container">
+  
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="header-left">
+        <h1>User Management</h1>
+        <p class="date">Manage team members and roles</p>
+      </div>
+      <button (click)="showCreateModal = true" class="btn-primary-sm">
+        + Add User
+      </button>
+    </header>
+
+    <div class="users-grid animate-fade-in">
+      <div *ngFor="let user of users" class="user-card">
+        <div class="user-avatar-glow">
+          {{ user.name?.charAt(0) }}
+        </div>
+        <div class="user-details">
+          <h3>{{ user.name }}</h3>
+          <p class="user-email">{{ user.email }}</p>
+          <span class="role-badge" [class]="(user.roleName || 'User').toLowerCase()">
+            {{ user.roleName || user.RoleName || 'User' }}
+          </span>
+        </div>
+        <div class="user-actions">
+          <button (click)="openEditModal(user)" class="btn-icon-edit" style="margin-right: 0.5rem; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 50%; width: 32px; height: 32px; color: #818cf8;">
+            ✎
+          </button>
+          <button *ngIf="user.email !== 'admin@projecthub.com'" (click)="deleteUser(user.id)" class="btn-icon-delete">
+            🗑️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    
+    <div *ngIf="showCreateModal" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <h2>Add System User</h2>
+        <form (ngSubmit)="createUser()">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" [(ngModel)]="newUser.name" name="name" required placeholder="John Doe">
+          </div>
+          <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" [(ngModel)]="newUser.email" name="email" required placeholder="john@company.com">
+          </div>
+          <div class="input-group">
+            <label>Initial Password</label>
+            <input type="password" [(ngModel)]="newUser.password" name="password" required placeholder="••••••••">
+          </div>
+          <div class="input-group">
+            <label>Assign Role</label>
+            <div class="role-selector-grid">
+              <div class="role-option" [class.selected]="newUser.roleId === 2" (click)="newUser.roleId = 2">
+                <span class="role-icon">👔</span>
+                <span class="role-name">Manager</span>
+              </div>
+              <div class="role-option" [class.selected]="newUser.roleId === 3" (click)="newUser.roleId = 3">
+                <span class="role-icon">👨‍💻</span>
+                <span class="role-name">Employee</span>
+              </div>
+              
+              <div class="role-option" [class.selected]="newUser.roleId === 1" (click)="newUser.roleId = 1">
+                <span class="role-icon">⚡</span>
+                <span class="role-name">Admin</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" (click)="showCreateModal = false" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div *ngIf="showEditModal" class="modal-overlay">
+      <div class="modal-content glass-card">
+        <h2>Edit User Info</h2>
+        <form (ngSubmit)="updateUser()">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" [(ngModel)]="editingUser.name" name="name" required placeholder="John Doe">
+          </div>
+          <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" [(ngModel)]="editingUser.email" name="email" required placeholder="john@company.com">
+          </div>
+          <div class="input-group">
+            <label>Update Role</label>
+            <div class="role-selector-grid">
+              <div class="role-option" [class.selected]="editingUser.roleId === 2" (click)="editingUser.roleId = 2">
+                <span class="role-icon">👔</span>
+                <span class="role-name">Manager</span>
+              </div>
+              <div class="role-option" [class.selected]="editingUser.roleId === 3" (click)="editingUser.roleId = 3">
+                <span class="role-icon">👨‍💻</span>
+                <span class="role-name">Employee</span>
+              </div>
+              <div class="role-option" [class.selected]="editingUser.roleId === 1" (click)="editingUser.roleId = 1">
+                <span class="role-icon">⚡</span>
+                <span class="role-name">Admin</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" (click)="showEditModal = false" class="btn-secondary">Cancel</button>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+

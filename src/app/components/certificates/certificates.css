@@ -1,0 +1,249 @@
+.certificates-container {
+  min-height: 100vh;
+  display: flex;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+}
+
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.certificate-card {
+  padding: 3rem;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.certificate-card::after {
+  content: 'OFFICIAL';
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background: var(--grad-primary);
+  color: white;
+  padding: 5px 40px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  transform: rotate(45deg);
+  opacity: 0.5;
+}
+
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.cert-seal {
+  font-size: 2rem;
+  color: #2563EB;
+}
+
+.cert-id {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-family: monospace;
+}
+
+.cert-body {
+  margin-bottom: 4rem;
+}
+
+.cert-label {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.875rem;
+  color: #22C55E;
+  margin-bottom: 1.5rem;
+}
+
+.user-name {
+  font-size: 2.5rem;
+  font-family: var(--font-title);
+  color: #0F172A;
+  margin-bottom: 1rem;
+}
+
+.cert-text {
+  color: #475569;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.course-name {
+  font-size: 1.75rem;
+  color: #1E293B;
+}
+
+.cert-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cert-meta {
+  text-align: left;
+}
+
+.cert-meta span {
+  display: block;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.no-certs-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 8rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-xl);
+  border: 1px dashed var(--border);
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.no-certs-state h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.no-certs-state p {
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  font-size: 1.125rem;
+}
+
+.loading-full {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--text-muted);
+}
+
+.loading-full p {
+  margin-top: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  .certificates-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .certificate-card {
+    padding: 1.5rem;
+  }
+
+  .user-name {
+    font-size: 1.75rem;
+  }
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  body {
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  app-sidebar,
+  .btn-outline,
+  .header-breadcrumb,
+  .content-header,
+  .subtitle {
+    display: none !important;
+  }
+
+
+  .certificates-container,
+  .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    background: white !important;
+  }
+
+  .certificates-grid {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .hidden-print {
+    display: none !important;
+  }
+
+
+  .certificate-card {
+    border: 15px solid #2c3e50 !important;
+    background: white !important;
+    color: #333 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 4rem !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .cert-label {
+    color: #555 !important;
+    font-size: 1.25rem !important;
+  }
+
+  .cert-seal {
+    color: #f39c12 !important;
+    font-size: 3rem !important;
+  }
+
+  .user-name {
+    font-size: 4rem !important;
+    color: #000 !important;
+  }
+
+  .course-name {
+    font-size: 2.5rem !important;
+    color: #2980b9 !important;
+  }
+
+  .cert-meta span {
+    color: #555 !important;
+    font-size: 1rem !important;
+  }
+}

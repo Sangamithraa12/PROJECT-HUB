@@ -1,0 +1,15 @@
+<div [@triggerName]="prepareRoute()">
+  <router-outlet></router-outlet>
+</div>
+<app-chatbot></app-chatbot>
+
+<!-- WhatsApp Style In-App Notification -->
+<div class="whatsapp-toast" *ngIf="activeToast" [class.show]="showToast">
+  <div class="toast-content">
+    <div class="toast-avatar">{{ activeToast.senderName.substring(0,1) }}</div>
+    <div class="toast-body">
+      <strong>{{ activeToast.senderName }}</strong>
+      <p>{{ activeToast.content }}</p>
+    </div>
+  </div>
+</div>

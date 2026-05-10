@@ -1,0 +1,52 @@
+<div class="certificates-container">
+  <app-sidebar></app-sidebar>
+
+  <main class="main-content">
+    <header class="content-header">
+      <div class="header-main">
+        <h1>My Certificates 🏆</h1>
+        <p class="subtitle">You have earned {{ certificates.length }} official certifications</p>
+      </div>
+    </header>
+
+    <div class="certificates-grid" *ngIf="!isLoading; else loading">
+      <div *ngFor="let cert of certificates" class="certificate-card glass-card animate-fade"
+           [class.printing-mode]="selectedCertIdForPrint === cert.id"
+           [class.hidden-print]="selectedCertIdForPrint !== null && selectedCertIdForPrint !== cert.id">
+        <div class="cert-header">
+          <div class="cert-seal">💠</div>
+          <span class="cert-id">ID: PH-{{ cert.id }}-{{ cert.courseId }}</span>
+        </div>
+        
+        <div class="cert-body">
+          <p class="cert-label">Certificate of Completion</p>
+          <h2 class="user-name">{{ currentUser?.user?.name }}</h2>
+          <p class="cert-text">has successfully completed the course</p>
+          <h3 class="course-name">{{ cert.courseTitle || cert.course?.title || 'Unknown Course' }}</h3>
+        </div>
+
+        <div class="cert-footer">
+          <div class="cert-meta">
+            <span class="date">Issued on {{ cert.completionDate | date:'longDate' }}</span>
+            <span class="score">Score: {{ cert.quizScore }}%</span>
+          </div>
+          <button class="btn-outline btn-sm" (click)="printCertificate(cert)">Download PDF</button>
+        </div>
+      </div>
+
+      <div class="no-certs-state" *ngIf="certificates.length === 0">
+        <div class="empty-icon">🏜️</div>
+        <h3>No Certificates Yet</h3>
+        <p>Complete a course with an 70% quiz score to earn your first certificate!</p>
+        <button routerLink="/courses" class="btn-primary">Browse Courses</button>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <div class="loading-full">
+        <div class="spinner"></div>
+        <p>Retrieving your achievements...</p>
+      </div>
+    </ng-template>
+  </main>
+</div>

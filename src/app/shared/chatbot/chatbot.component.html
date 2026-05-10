@@ -1,0 +1,175 @@
+<div class="chat-drawer-overlay" [class.active]="isOpen" (click)="closeChat()"></div>
+<div class="chat-drawer" [class.active]="isOpen">
+  <div class="chat-drawer-content glass-card" (click)="$event.stopPropagation()">
+    <header class="chat-header">
+      <div class="chat-title-info">
+        <button *ngIf="activeTask || isAiMode || isDmMode" class="btn-back-chat" (click)="selectTask(null)" title="Back to Assistant">←</button>
+        <div class="title-text">
+          <span class="chat-task-tag">🤖 PROJECT ASSISTANT</span>
+          <h2>{{ isDmMode ? activeChatUser.name : (isAiMode ? 'General AI Chat' : (activeTask ? activeTask.title : (isTeamOnlyMode ? 'Team Chat' : 'Assistant Menu'))) }}</h2>
+        </div>
+      </div>
+      <button class="btn-close-chat" (click)="closeChat()">✕</button>
+    </header>
+
+    <div class="chat-messages-container" #chatScroll>
+      <!-- Menu View -->
+      <div *ngIf="!activeTask && !isAiMode && !isDmMode" class="no-task-selected">
+        <div *ngIf="!isTeamOnlyMode" class="bot-status">
+          <div class="pulse-ring"></div>
+          <span class="status-text">Online & Ready</span>
+        </div>
+        <p *ngIf="!isTeamOnlyMode" class="welcome-msg">How would you like to interact today?</p>
+        
+        <div class="task-selector-list">
+          <!-- AI Mode Option -->
+          <div *ngIf="!isTeamOnlyMode" class="task-select-item ai-special-item" (click)="enterAiMode()">
+            <span class="task-icon">✨</span>
+            <div class="task-info">
+              <span class="task-name">General AI Chat</span>
+              <span class="project-name">Ask GPT anything</span>
+            </div>
+            <span class="arrow">→</span>
+          </div>
+
+          <div class="menu-divider"><span>DIRECT MESSAGES</span></div>
+          
+          <div class="team-grid">
+            <div *ngFor="let member of teamMembers" class="team-user-item" (click)="enterDmMode(member)">
+              <div class="avatar-container">
+                <div class="avatar">{{ member.name.substring(0, 1) }}</div>
+                <span class="online-dot"></span>
+                <span class="unread-badge-dot" *ngIf="unreadCounts[member.id] > 0">{{ unreadCounts[member.id] }}</span>
+              </div>
+              <span class="team-user-name">{{ member.name }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="!isTeamOnlyMode" class="menu-divider"><span>PROJECT TASKS</span></div>
+
+          <ng-container *ngIf="!isTeamOnlyMode">
+            <div *ngFor="let task of allTasks" class="task-select-item" (click)="selectTask(task)">
+              <span class="task-icon">📋</span>
+              <div class="task-info">
+                <span class="task-name">{{ task.title }}</span>
+                <span class="project-name">{{ task.projectName }}</span>
+              </div>
+              <span class="arrow">→</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="isDmMode" class="messages-list">
+        <div *ngFor="let msg of dmMessages[activeChatUser.id]" class="message-wrapper" [class.own-message]="+msg.userId === +currentUserId">
+          <div class="avatar" *ngIf="+msg.userId !== +currentUserId">{{ activeChatUser.name.substring(0, 1) }}</div>
+          <div class="message-bubble glass-card">
+            <div class="message-media" *ngIf="msg.fileUrl">
+              <div class="image-preview-box" *ngIf="isImage(msg.fileUrl)">
+                <img [src]="getFullUrl(msg.fileUrl)" [alt]="msg.content" class="chat-img" (click)="openImage(getFullUrl(msg.fileUrl))">
+              </div>
+              
+              <a *ngIf="!isImage(msg.fileUrl)" [href]="getFullUrl(msg.fileUrl)" target="_blank" class="file-chip">
+                <span class="file-icon">{{ getFileIcon(msg.fileUrl) }}</span>
+                <div class="file-info"><span class="file-name">{{ getFileName(msg.fileUrl) }}</span></div>
+              </a>
+            </div>
+            <div class="message-content"><p>{{ msg.content }}</p></div>
+            <div class="message-actions" *ngIf="+msg.userId === +currentUserId">
+              <button class="btn-msg-menu" (click)="toggleMsgMenu(msg.id)">⋮</button>
+              <div class="msg-dropdown" *ngIf="openMenuId === msg.id">
+                <button (click)="deleteDmMessage(msg.id)" class="btn-msg-delete">
+                  <span>🗑️</span> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Chat View -->
+      <div *ngIf="isAiMode" class="messages-list">
+        <div *ngFor="let msg of aiMessages" class="message-wrapper" [class.own-message]="msg.userId !== 0">
+          <div class="avatar" *ngIf="msg.userId === 0">AI</div>
+          <div class="message-bubble glass-card" [class.ai-bubble]="msg.userId === 0">
+            <div class="message-content"><p>{{ msg.content }}</p></div>
+          </div>
+        </div>
+        
+        <!-- Typing Indicator -->
+        <div *ngIf="isSendingComment" class="message-wrapper">
+          <div class="avatar">AI</div>
+          <div class="message-bubble ai-bubble typing-bubble">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Discussion View -->
+      <div *ngIf="activeTask && !activeTask.comments?.length" class="empty-chat">
+        <div class="empty-chat-icon">🤖</div>
+        <p>No messages yet for this task.<br>Start the conversation!</p>
+      </div>
+
+      <div *ngIf="activeTask" class="messages-list">
+        <div *ngFor="let comment of activeTask.comments" 
+             class="message-wrapper" 
+             [class.own-message]="+comment.userId === +currentUserId">
+          <div class="avatar" *ngIf="+comment.userId !== +currentUserId">
+            {{ comment.userName?.substring(0, 1) || '?' }}
+          </div>
+          <div class="message-bubble glass-card">
+            <div class="message-media" *ngIf="comment.fileUrl">
+              <div class="image-preview-box" *ngIf="isImage(comment.fileUrl)">
+                <img [src]="getFullUrl(comment.fileUrl)" [alt]="comment.content" class="chat-img" (click)="openImage(getFullUrl(comment.fileUrl))">
+              </div>
+              
+              <a *ngIf="!isImage(comment.fileUrl)" [href]="getFullUrl(comment.fileUrl)" target="_blank" class="file-chip">
+                <span class="file-icon">{{ getFileIcon(comment.fileUrl) }}</span>
+                <div class="file-info"><span class="file-name">{{ getFileName(comment.fileUrl) }}</span></div>
+              </a>
+            </div>
+
+            <div class="message-content"><p>{{ comment.content }}</p></div>
+            <div class="message-actions" *ngIf="+comment.userId === +currentUserId">
+              <button class="btn-msg-menu" (click)="toggleMsgMenu(comment.id)">⋮</button>
+              <div class="msg-dropdown" *ngIf="openMenuId === comment.id">
+                <button (click)="deleteComment(comment.id)" class="btn-msg-delete">
+                  <span>🗑️</span> Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="chat-input-area" *ngIf="activeTask || isAiMode || isDmMode">
+      <div class="chat-input-wrapper">
+        <button *ngIf="activeTask || isDmMode" class="btn-attach" (click)="triggerChatFileSelect()" [disabled]="isSendingComment || isUploadingChatFile" title="Attach Files">
+          📎
+        </button>
+        <input type="file" #chatFileInput (change)="onChatFileSelected($event)" style="display: none;">
+        
+        <textarea [(ngModel)]="chatCommentInput" 
+                  [placeholder]="isDmMode ? 'Message ' + activeChatUser.name + '...' : 'Type a message...'" 
+                  (keydown.enter)="$event.preventDefault(); addChatComment()"
+                  [disabled]="isSendingComment || isUploadingChatFile"
+                  class="chat-textarea"></textarea>
+        
+        <button class="btn-send-chat" (click)="addChatComment()" [disabled]="!chatCommentInput.trim() || isSendingComment || isUploadingChatFile">
+          Send ↗
+        </button>
+      </div>
+      
+      <div *ngIf="isUploadingChatFile" class="upload-indicator">
+        <div class="mini-progress-bar">
+          <div class="mini-progress-fill" [style.width.%]="chatFileProgress"></div>
+        </div>
+        <span>Uploading...</span>
+      </div>
+    </footer>
+  </div>
+</div>

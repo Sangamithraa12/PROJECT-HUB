@@ -1,59 +1,81 @@
-# ProjecthubUi
+ProjectHub is a premium, elite-standard task management and collaboration platform built for seamless team coordination. It delivers a modern, high-performance experience with advanced UI design, secure architecture, and scalable backend systems.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+### 💎 Elite UI/UX
+- Clean Tech modern design
+- Glassmorphism UI components
+- Smooth micro-animations
+- Dynamic light/dark theme switching
 
-## Development server
+### 🔐 Secure Authentication
+- JWT-based authentication
+- Role-Based Access Control (RBAC)
+- BCrypt password hashing
+- Legacy password auto-migration to secure format
 
-To start a local development server, run:
+### ⚡ High Performance
+- Fast API responses using Mapster
+- Optimized backend services
+- Scalable and modular architecture
 
-```bash
-ng serve
+### 🔔 Smart Notifications
+- Real-time activity alerts
+- Task assignment notifications
+- Grouped notifications for better focus
+
+### 💬 Collaboration Hub
+- Chat-based task discussions (WhatsApp-style)
+- Chronological messaging
+- File sharing support
+
+### 📊 Dynamic Dashboards
+#### 👨‍💼 Admin
+- System overview
+- User management
+- Platform insights
+
+#### 🧑‍💻 Manager
+- Assign and monitor tasks
+- Team performance tracking
+
+#### 👨‍💻 Employee
+- View assigned tasks
+- Update progress
+- Track deadlines
+
+### 🎓 LMS Integration
+- Course management system
+- Progress tracking
+- Automatic certificate generation
+
+```
+PROJECT-HUB/
+├── BACKEND/ # ASP.NET Core Web API
+│ ├── Mapping/ # Mapster Configurations
+│ ├── Controllers/ # API Endpoints
+│ ├── Services/ # Business Logic
+│ └── Data/ # DB Context & Migrations
+│ └── FRONTEND/ # Angular Application
+├── src/app/ # Components & Logic
+└── src/assets/ # UI Tokens & Design Assets
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+💎 Current State
+ProjectHub has undergone a significant refactoring and enhancement phase to improve overall quality, scalability, and maintainability.
 
-## Code scaffolding
+✨ Improvements
+1. Clean Naming: Context-based meaningful variable and function names
+2. Modular Architecture: Large components and services broken into reusable modules
+3. Improved Code Readability: Structured and well-organized codebase
+4. Optimized Performance: Efficient API handling and reduced overhead
+5. Better Documentation: Clear comments and structured explanations
+6. Scalable Design: Follows clean architecture principles for future expansion
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+🤝 Contribution
+Contributions are welcome!
+Fork the repository
+Create a branch
+Commit changes
+Submit a Pull Request 🚀
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+👩‍💻 Author
+Sangamithra P

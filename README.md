@@ -1,133 +1,271 @@
 # 🚀 ProjectHub
 
-> A premium task management and collaboration platform built for seamless team coordination — featuring real-time communication, role-based dashboards, and an integrated LMS.
+A full-stack enterprise-grade Project Management, Task Collaboration, and Employee Learning platform built using Angular and ASP.NET Core.
+
+ProjectHub combines project tracking, real-time communication, employee collaboration, and LMS functionality into a single scalable platform designed with clean architecture principles and enterprise-grade backend patterns.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### 🔐 Secure Authentication
-- JWT-based authentication with BCrypt password hashing
-- Role-Based Access Control (RBAC) — Admin, Manager, Employee
-- Legacy password auto-migration to secure format
-
-### 📊 Role-Based Dashboards
-
-| Role | Capabilities |
-|------|-------------|
-| 👨‍💼 **Admin** | System overview, user management, platform insights |
-| 🧑‍💻 **Manager** | Assign & monitor tasks, team performance tracking |
-| 👨‍💻 **Employee** | View assigned tasks, update progress, track deadlines |
-
-### 💬 Collaboration Hub
-- WhatsApp-style chat for task discussions
-- Real-time activity alerts via SignalR
-- Task assignment notifications with grouping
-- File sharing support
-
-### 🎓 LMS Integration
-- Course management system
-- Progress tracking
-- Automatic certificate generation
-
-### 💎 UI/UX
-- Glassmorphism components with micro-animations
-- Dynamic light/dark theme switching
-- Responsive design across devices
+## 📁 Project Management
+- Create, update, and manage projects
+- Assign managers and employees
+- Track project progress and status
 
 ---
 
-## 🏗️ Architecture
+## ✅ Kanban Task Board
+- Drag-and-drop task management
+- Task prioritization and status tracking
+- Employee task assignment
+- Real-time task updates
 
+---
+
+## 💬 Real-time Chat (SignalR)
+- Instant messaging between users
+- Real-time communication without refresh
+- Live chat updates using SignalR hubs
+
+---
+
+## 🔔 Live Notifications
+- Instant task assignment alerts
+- Real-time status notifications
+- SignalR-powered notification delivery
+
+---
+
+## 📊 Leaderboard
+- Employee productivity tracking
+- Performance-based ranking system
+- Dynamic leaderboard updates
+
+---
+
+## 🎓 Course Management (LMS)
+- Upload and manage learning resources
+- Employee course enrollment
+- Training progress tracking
+
+---
+
+## 🔐 Role-Based Access Control
+
+### Admin
+- Full system access
+- Manage users, projects, tasks, and courses
+
+### Manager
+- Create and manage projects/tasks
+- Assign work to employees
+
+### Employee
+- View assigned tasks
+- Update task status
+- Access learning materials
+
+---
+
+## 🧪 Unit Testing
+- xUnit testing framework
+- Moq for dependency mocking
+- Service-layer unit testing
+
+---
+
+# 🏛️ Architecture
+
+```text
+Angular Frontend
+        ↓
+JWT Authentication
+        ↓
+ASP.NET Core Controllers
+        ↓
+MediatR (CQRS)
+        ↓
+Repository Layer
+        ↓
+Entity Framework Core
+        ↓
+SQL Server
 ```
-PROJECT-HUB/
-├── BACKEND/
-│   └── ProjectHubAPI/
-│       ├── Controllers/       # API endpoints
-│       ├── DTOs/              # Data Transfer Objects
-│       ├── Data/              # DbContext & migrations
-│       ├── Hubs/              # SignalR real-time hubs
-│       ├── Mapping/           # Mapster profiles
-│       ├── Middleware/        # Custom middleware
-│       ├── Models/            # Domain entities
-│       ├── Services/          # Business logic
-│       ├── Validators/        # FluentValidation
-│       └── wwwroot/uploads/   # File storage
+
+---
+
+# ⚙️ Tech Stack
+
+| Layer                   | Technology            |
+| ----------------------- | --------------------- |
+| Frontend                | Angular 17+           |
+| Backend                 | ASP.NET Core Web API  |
+| Database                | SQL Server Express    |
+| ORM                     | Entity Framework Core |
+| Authentication          | JWT Bearer Tokens     |
+| Real-time Communication | SignalR               |
+| Validation              | FluentValidation      |
+| Mapping                 | Mapster               |
+| Mediator Pattern        | MediatR               |
+| Testing                 | xUnit + Moq           |
+
+---
+
+# 🏗️ Backend Architecture
+
+The backend follows:
+
+* Clean Architecture
+* CQRS (Command Query Responsibility Segregation)
+* Repository Pattern
+* Service-Oriented Design
+* Dependency Injection
+* Global Exception Handling Middleware
+
+---
+
+# 📂 Project Structure
+
+```text
+BACKEND/
 │
-├── FRONTEND/
-│   └── projecthub-ui/
-│       └── src/app/
-│           ├── components/    # UI components
-│           ├── guards/        # Route guards
-│           ├── interceptors/  # HTTP interceptors (JWT)
-│           ├── models/        # TypeScript interfaces
-│           ├── pipes/         # Custom pipes
-│           ├── services/      # API services
-│           └── shared/        # Shared modules
-│
-└── README.md
+├── Controllers/        → API Endpoints
+├── Features/           → CQRS Commands & Queries
+├── Repositories/       → Database Access Layer
+├── Services/           → Business Logic
+├── DTOs/               → Data Transfer Objects
+├── Models/             → Entity Models
+├── Middleware/         → Global Exception Handling
+├── Validators/         → FluentValidation Rules
+├── Hubs/               → SignalR Real-time Hubs
+├── Mapping/            → Mapster Configuration
+├── Data/               → DbContext & Migrations
+└── Program.cs          → Startup Configuration
 ```
 
 ---
 
-## ⚙️ Tech Stack
+# 🔐 Authentication Flow
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Angular, TypeScript, CSS Animations |
-| Backend | ASP.NET Core Web API |
-| Auth | JWT + BCrypt + RBAC |
-| Real-time | SignalR |
-| ORM | Entity Framework Core |
-| Mapping | Mapster |
-| Validation | FluentValidation |
-| Testing | xUnit (ProjectHubAPI.Tests) |
+```text
+1. User logs in
+2. Backend validates credentials
+3. JWT token generated
+4. Angular stores token
+5. Interceptor attaches token to requests
+6. Backend validates token
+7. Authorized APIs become accessible
+```
 
 ---
 
-## 🚀 Getting Started
+# 📡 Real-time Communication
 
-### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [Node.js 18+](https://nodejs.org/)
-- [Angular CLI](https://angular.io/cli)
-- SQL Server (or update connection string for your DB)
+SignalR is used for:
 
-### Backend Setup
+* Real-time chat
+* Live notifications
+* Instant UI updates
+* Task assignment alerts
+
+---
+
+# 🛡️ Security Features
+
+* JWT Stateless Authentication
+* BCrypt Password Hashing
+* Role-based Authorization
+* Global Exception Middleware
+* Secure API Endpoints
+
+---
+
+# 📊 Database
+
+```text
+Database: ProjectHubDB
+Server: localhost\SQLEXPRESS
+ORM: Entity Framework Core
+Approach: Code-First Migrations
+```
+
+---
+
+# 🚀 How to Run
+
+## Backend
 
 ```bash
-cd BACKEND/ProjectHubAPI
-dotnet restore
-dotnet ef database update
-dotnet run
+Open ProjectHubAPI in Visual Studio
+Press F5
 ```
 
-API runs at: `https://localhost:7001`
+Backend runs on:
 
-### Frontend Setup
+```text
+https://localhost:10001
+```
+
+Swagger:
+
+```text
+https://localhost:10001/swagger
+```
+
+---
+
+## Frontend
 
 ```bash
 cd FRONTEND/projecthub-ui
 npm install
-ng serve
+npm start
 ```
 
-App runs at: `http://localhost:4200`
+Frontend runs on:
+
+```text
+http://localhost:4200
+```
 
 ---
 
-## 🧪 Running Tests
+# 🧪 Run Unit Tests
 
 ```bash
-cd BACKEND/ProjectHubAPI.Tests
 dotnet test
 ```
 
 ---
 
-## 👩‍💻 Author
+# 🌟 Key Technical Highlights
 
-**Sangamithra P**
+* Enterprise-style layered architecture
+* CQRS with MediatR
+* Real-time SignalR communication
+* JWT-based stateless authentication
+* Global exception middleware
+* Repository pattern implementation
+* Unit testing with xUnit and Moq
+* FluentValidation-based request validation
+* Angular standalone component architecture
 
 ---
 
+# 📌 Future Enhancements
+
+* Docker containerization
+* Redis caching
+* Email notifications
+* Azure deployment
+* Microservices architecture
+* AI-powered productivity analytics
+
+---
+
+# 👩‍💻 Developed By
+
+### Sangamithra P
+
+Full Stack Developer | ASP.NET Core | Angular | SQL Server | Real-time Applications

@@ -218,10 +218,10 @@ export class TasksComponent implements OnInit {
       timeout(30000),
       catchError(err => {
         console.error('Project loading failed:', err);
-        return of([]);
+        return of({ success: false, data: [] as Project[], message: '' });
       })
-    ).subscribe((data: Project[]) => {
-      this.projects = data;
+    ).subscribe((response) => {
+      this.projects = response.data ?? [];
       this.cdr.detectChanges();
     });
   }

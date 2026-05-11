@@ -69,10 +69,10 @@ export class ProjectDetailsComponent implements OnInit {
           this.isLoading = false;
           this.cdr.detectChanges();
       })
-    ).subscribe(data => {
-      console.log('>>> [PROJECT DETAILS] Received data:', data);
-      this.project = data;
-      if (!data && !this.errorMessage) {
+    ).subscribe(response => {
+      console.log('>>> [PROJECT DETAILS] Received data:', response);
+      this.project = response?.data;
+      if (!response?.data && !this.errorMessage) {
         this.errorMessage = 'Project not found.';
       }
       this.isLoading = false;
@@ -105,7 +105,7 @@ export class ProjectDetailsComponent implements OnInit {
     ).subscribe({
       next: (res) => {
         if (this.project) {
-          this.project.filesUrl = res.url;
+          this.project.filesUrl = res.data;
         }
         this.cdr.detectChanges();
         alert('File uploaded successfully!');
@@ -127,7 +127,7 @@ export class ProjectDetailsComponent implements OnInit {
     ).subscribe({
       next: (res) => {
         if (this.project) {
-          this.project.filesUrl = res.url;
+          this.project.filesUrl = res.data;
         }
         this.cdr.detectChanges();
         alert('Folder uploaded successfully!');

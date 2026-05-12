@@ -25,15 +25,9 @@ namespace ProjectHubAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            Console.WriteLine($"[AUTH] Login attempt for {dto.Email}");
-            
             var user = await _context.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(x => x.Email == dto.Email);
-
-            sw.Stop();
-            Console.WriteLine($"[AUTH] DB Query took {sw.ElapsedMilliseconds}ms");
 
             if (user == null)
             {
@@ -42,22 +36,18 @@ namespace ProjectHubAPI.Controllers
 
             bool isPasswordValid = false;
 
-            // Check if stored password is a BCrypt hash
             if (user.Password.StartsWith("$2") && user.Password.Length > 20)
             {
                 isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.Password);
             }
             else
             {
-                // Fallback for plain-text migration
                 isPasswordValid = (user.Password == dto.Password);
 
                 if (isPasswordValid)
                 {
-                    // Auto-migrate user to BCrypt hash
                     user.Password = BCrypt.Net.BCrypt.HashPassword(dto.Password);
                     await _context.SaveChangesAsync();
-                    Console.WriteLine($"[AUTH] Migrated user {user.Email} to BCrypt hash.");
                 }
             }
 
@@ -77,10 +67,8 @@ namespace ProjectHubAPI.Controllers
         {
             try
             {
-                var sw = System.Diagnostics.Stopwatch.StartNew();
                 var canConnect = await _context.Database.CanConnectAsync();
-                sw.Stop();
-                return Ok(new { Status = "Healthy", ConnectionTime = $"{sw.ElapsedMilliseconds}ms", CanConnect = canConnect });
+                return Ok(new { Status = "Healthy", CanConnect = canConnect });
             }
             catch (Exception ex)
             {

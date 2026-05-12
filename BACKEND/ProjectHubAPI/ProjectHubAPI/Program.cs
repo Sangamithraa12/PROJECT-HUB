@@ -129,7 +129,6 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-        Console.WriteLine("[STARTUP] Checking database connection and applying migrations...");
         var context = services.GetRequiredService<AppDbContext>();
         context.Database.Migrate();
 
@@ -166,27 +165,16 @@ using (var scope = app.Services.CreateScope())
             END
         ");
 
-        Console.WriteLine("[STARTUP] Starting database seeding...");
         DbInitializer.Seed(context);
-        Console.WriteLine("[STARTUP] Database seeded successfully.");
     }
-    catch (Exception ex)
+    catch (Exception)
     {
-        Console.WriteLine($"[STARTUP ERROR] Database seeding failed: {ex.Message}");
-        if (ex.InnerException != null)
-        {
-            Console.WriteLine($"[INNER ERROR] {ex.InnerException.Message}");
-        }
     }
 }
 
 app.UseCors("AllowAll");
 
-app.Use(async (context, next) =>
-{
-    Console.WriteLine($"[DEBUG] {context.Request.Method} {context.Request.Path}");
-    await next();
-});
+app.UseCors("AllowAll");
 
 app.UseMiddleware<ProjectHubAPI.Middleware.ExceptionMiddleware>();
 

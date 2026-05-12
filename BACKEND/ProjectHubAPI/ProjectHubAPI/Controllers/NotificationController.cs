@@ -32,7 +32,7 @@ namespace ProjectHubAPI.Controllers
             var notifications = await _context.Notifications
                 .Where(n => n.UserId == userId)
                 .OrderByDescending(n => n.CreatedAt)
-                .Take(20) // Limit to recent 20
+                .Take(20)
                 .Select(n => new NotificationDto
                 {
                     Id = n.Id,

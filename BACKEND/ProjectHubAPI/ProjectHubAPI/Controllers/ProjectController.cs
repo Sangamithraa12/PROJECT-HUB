@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ProjectHubAPI.DTOs;
-using ProjectHubAPI.Services;
-using ProjectHubAPI.Models.Common;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using ProjectHubAPI.DTOs;
+using ProjectHubAPI.Features.Projects.Commands;
 using ProjectHubAPI.Features.Projects.Queries;
+using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Services;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProjectHubAPI.Controllers
 {
@@ -17,48 +17,48 @@ namespace ProjectHubAPI.Controllers
     [Authorize]
     public class ProjectController : BaseController
     {
-        private readonly IProjectService _projectService;
         private readonly IMediator _mediator;
+        private readonly IProjectService _projectService;
 
-        public ProjectController(IProjectService projectService, IMediator mediator)
+        public ProjectController(IMediator mediator, IProjectService projectService)
         {
-            _projectService = projectService;
             _mediator = mediator;
+            _projectService = projectService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProjects() => 
-            HandleResponse(await _projectService.GetAllProjectsAsync());
+        public async Task<IActionResult> GetProjects() =>
+            HandleResponse(await _mediator.Send(new GetAllProjectsQuery()));
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProject(int id) => 
+        public async Task<IActionResult> GetProject(int id) =>
             HandleResponse(await _mediator.Send(new GetProjectByIdQuery(id)));
 
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> CreateProject(CreateProjectDto projectDto)
+        public async Task<IActionResult> CreateProject(CreateProjectDto dto)
         {
-            var result = await _projectService.CreateProjectAsync(projectDto);
-            return result.Success 
-                ? CreatedAtAction(nameof(GetProject), new { id = result.Data?.Id }, result) 
+            var result = await _mediator.Send(new CreateProjectCommand(dto));
+            return result.Success
+                ? CreatedAtAction(nameof(GetProject), new { id = result.Data?.Id }, result)
                 : BadRequest(result);
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> UpdateProject(int id, CreateProjectDto projectDto) => 
-            HandleResponse(await _projectService.UpdateProjectAsync(id, projectDto));
+        public async Task<IActionResult> UpdateProject(int id, CreateProjectDto dto) =>
+            HandleResponse(await _mediator.Send(new UpdateProjectCommand(id, dto)));
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<IActionResult> DeleteProject(int id) => 
-            HandleResponse(await _projectService.DeleteProjectAsync(id));
+        public async Task<IActionResult> DeleteProject(int id) =>
+            HandleResponse(await _mediator.Send(new DeleteProjectCommand(id)));
 
         [HttpPost("{id}/upload")]
         [Authorize(Roles = "Admin,Manager,Employee")]
         public async Task<IActionResult> UploadFile(int id, IFormFile file)
         {
-            if (file == null || file.Length == 0) 
+            if (file == null || file.Length == 0)
                 return BadRequest(ServiceResponse<string>.Fail("File is empty"));
 
             using var stream = file.OpenReadStream();
@@ -69,13 +69,13 @@ namespace ProjectHubAPI.Controllers
         [Authorize(Roles = "Admin,Manager,Employee")]
         public async Task<IActionResult> UploadFolder(int id, List<IFormFile> files)
         {
-            if (files == null || !files.Any()) 
+            if (files == null || !files.Any())
                 return BadRequest(ServiceResponse<string>.Fail("No files uploaded"));
 
-            var fileData = files.Select(file => new ProjectFileData 
-            { 
-                FileName = file.FileName, 
-                Stream = file.OpenReadStream() 
+            var fileData = files.Select(f => new ProjectFileData
+            {
+                FileName = f.FileName,
+                Stream = f.OpenReadStream()
             }).ToList();
 
             return HandleResponse(await _projectService.UploadProjectFolderAsync(id, fileData));

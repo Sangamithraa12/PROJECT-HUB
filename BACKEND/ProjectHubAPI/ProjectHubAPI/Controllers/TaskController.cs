@@ -6,9 +6,6 @@ using System.Linq;
 
 namespace ProjectHubAPI.Controllers
 {
-    /// <summary>
-    /// Controller for managing task-related operations.
-    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize]
@@ -35,11 +32,6 @@ namespace ProjectHubAPI.Controllers
             return Ok(task);
         }
 
-        /// <summary>
-        /// Creates a new task.
-        /// </summary>
-        /// <param name="taskDto">The task details.</param>
-        /// <returns>The created task.</returns>
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> CreateTask(CreateTaskDto taskDto)

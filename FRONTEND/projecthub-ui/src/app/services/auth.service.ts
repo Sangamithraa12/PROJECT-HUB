@@ -17,7 +17,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     const savedUser = sessionStorage.getItem('currentUser');
-    const savedUser = sessionStorage.getItem('currentUser');
     
     let initialUser = {};
     if (savedUser) {

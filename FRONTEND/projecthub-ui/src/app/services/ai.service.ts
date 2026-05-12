@@ -17,12 +17,12 @@ export class AiService {
       return of("Please set your Gemini API Key to get real answers!");
     }
 
-    // Wrap the whole thing in a promise to allow 'await' for the model check
+
     const promise = this.executeWithModelDiscovery(query);
 
     return from(promise).pipe(
       catchError(error => {
-        console.error('Final AI Error:', error);
+
         return of(`AI Error: ${error.message}. Please check if the "Generative Language API" is enabled in your Google Cloud Console.`);
       })
     );
@@ -30,18 +30,18 @@ export class AiService {
 
   private async executeWithModelDiscovery(query: string): Promise<string> {
     try {
-      // Step 1: Try with current active model
+
       return await this.callGemini(this.activeModel, query);
     } catch (err: any) {
-      // Step 2: If model not found, try to discover what's available
+
       if (err.message.includes('not found') || err.message.includes('404')) {
-        console.log('Model not found, discovering available models...');
+
         try {
           const modelsRes = await fetch(`${this.baseUrl}/models?key=${this.apiKey}`);
           const modelsData = await modelsRes.json();
           
           if (modelsData.models && modelsData.models.length > 0) {
-            // Pick the first model that supports generateContent
+
             const bestModel = modelsData.models.find((m: any) => 
               m.supportedGenerationMethods.includes('generateContent') && 
               (m.name.includes('flash') || m.name.includes('pro'))
@@ -49,13 +49,13 @@ export class AiService {
             
             if (bestModel) {
               const modelName = bestModel.name.split('/').pop();
-              console.log('Discovered best model:', modelName);
+
               this.activeModel = modelName;
               return await this.callGemini(this.activeModel, query);
             }
           }
         } catch (discoveryErr) {
-          console.error('Model discovery failed:', discoveryErr);
+
         }
       }
       throw err;

@@ -24,7 +24,6 @@ export class LoginComponent {
   ) {}
 
   login() {
-    console.log('Login attempt started for:', this.email);
     this.errorMessage = '';
     this.isLoading = true;
 
@@ -35,7 +34,6 @@ export class LoginComponent {
 
     this.auth.login(data).subscribe({
       next: (res) => {
-        console.log('Login successful', res);
         this.isLoading = false;
         this.cdr.detectChanges();
         this.router.navigate(['/dashboard']);
@@ -52,7 +50,6 @@ export class LoginComponent {
           this.errorMessage = err.error?.message || err.error || 'An unexpected error occurred';
         }
         
-        console.log('Component Status - isLoading:', this.isLoading, 'errorMessage:', this.errorMessage);
         this.cdr.detectChanges(); 
       }
     });

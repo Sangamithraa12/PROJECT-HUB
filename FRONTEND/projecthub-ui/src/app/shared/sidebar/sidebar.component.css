@@ -362,7 +362,7 @@
 .nav-item.active {
   background: var(--grad-primary);
   color: #fff;
-  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
 }
 
 /* When chat is open, suppress routerLinkActive highlights on page nav items */

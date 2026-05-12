@@ -70,14 +70,14 @@ export class ProjectDetailsComponent implements OnInit {
           this.cdr.detectChanges();
       })
     ).subscribe(response => {
-      console.log('>>> [PROJECT DETAILS] Received data:', response);
+
       this.project = response?.data;
       if (!response?.data && !this.errorMessage) {
         this.errorMessage = 'Project not found.';
       }
       this.isLoading = false;
       this.cdr.detectChanges();
-      console.log('>>> [PROJECT DETAILS] isLoading is now:', this.isLoading);
+
     });
   }
 

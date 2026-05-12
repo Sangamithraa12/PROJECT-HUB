@@ -17,15 +17,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     const savedUser = sessionStorage.getItem('currentUser');
-    console.log('>>> [AUTH SERVICE] Initializing from sessionStorage:', savedUser ? 'User found' : 'No user found');
+    const savedUser = sessionStorage.getItem('currentUser');
     
     let initialUser = {};
     if (savedUser) {
       try {
         initialUser = JSON.parse(savedUser);
-        console.log('>>> [AUTH SERVICE] Parsed user has token:', !!(initialUser as any).token);
       } catch (e) {
-        console.error('>>> [AUTH SERVICE] Error parsing saved user:', e);
       }
     }
     
@@ -38,27 +36,16 @@ export class AuthService {
   }
 
   login(data: any) {
-    console.log('>>> [AUTH SERVICE] Starting login request for:', data.email);
-    console.log('>>> [AUTH SERVICE] Target URL:', this.apiUrl + '/login');
     
     return this.http.post<any>(this.apiUrl + '/login', data)
       .pipe(
         timeout(30000), 
         map(user => {
-          console.log('>>> [AUTH SERVICE] Success! Received user:', user);
           sessionStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;
         }),
         catchError(err => {
-          console.error('>>> [AUTH SERVICE] Login Error Details:', {
-            status: err.status,
-            statusText: err.statusText,
-            name: err.name,
-            message: err.message,
-            url: err.url,
-            error: err.error
-          });
           if (err.status === 0) {
              return throwError(() => 'Cannot connect to server. Please check if the API is running at ' + this.apiUrl);
           }

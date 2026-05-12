@@ -30,14 +30,14 @@ export class RealTimeChatService {
     this.startConnection();
     this.requestNotificationPermission();
     
-    // Listen for login to join group if not already joined
+
     this.auth.currentUser.subscribe(user => {
       if (user && user.token && this.hubConnection && this.hubConnection.state === signalR.HubConnectionState.Connected) {
         const userId = this.auth.getUserId();
         if (userId) {
           this.hubConnection.invoke('JoinChat', userId.toString())
-            .then(() => console.log('Joined private chat group after login: ' + userId))
-            .catch(err => console.error('Error joining group after login:', err));
+            .then(() => {})
+            .catch(err => {});
         }
       }
     });
@@ -60,24 +60,22 @@ export class RealTimeChatService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('SignalR Connected');
         const userId = this.auth.getUserId();
         if (userId) {
           this.hubConnection.invoke('JoinChat', userId.toString())
-            .then(() => console.log('Joined private chat group: ' + userId))
-            .catch(err => console.error('Error joining group:', err));
+            .then(() => {})
+            .catch(err => {});
         }
       })
-      .catch(err => console.log('Error while starting SignalR: ' + err));
+      .catch(err => {});
 
     this.hubConnection.on('ReceiveMessage', (senderId, messageData) => {
       const currentUserId = this.auth.getUserId();
       if (senderId && senderId.toString() === currentUserId.toString()) {
-        console.log('Skipping self-notification for message sent by current user');
         return;
       }
 
-      // Reload persistent notifications so ChatBotComponent can see the new 'Chat' type notification
+
       this.notificationService.loadNotifications();
 
       if (messageData && messageData.type === 'DELETED') {
@@ -106,7 +104,7 @@ export class RealTimeChatService {
       this.unreadCountSubject.next(this.unreadCountSubject.value + 1);
       this.updateTitle();
       this.showBrowserNotification(senderId, content);
-      this.newMessageAlertSubject.next(msgData); // For in-app toast
+      this.newMessageAlertSubject.next(msgData);
     });
 
     this.hubConnection.on('ReceiveNotification', (message: string) => {

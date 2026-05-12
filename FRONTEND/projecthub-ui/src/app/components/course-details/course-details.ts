@@ -48,18 +48,18 @@ export class CourseDetails implements OnInit {
 
   loadCourseData(): void {
     this.isLoading = true;
-    console.log('Fetching course data for ID:', this.courseId);
+
     
     this.courseService.getCourse(this.courseId).pipe(
       timeout(3000),
       catchError(err => {
-        console.error('CRITICAL: Error loading course data', err);
+
         this.isLoading = false;
         return of(null);
       })
     ).subscribe(course => {
       if (course) {
-        console.log('Course found:', course);
+
         this.course = course;
         if (this.course.modules && this.course.modules.length > 0) {
             this.activeModule = this.course.modules[0];
@@ -68,7 +68,7 @@ export class CourseDetails implements OnInit {
         this.parseQuizData();
         this.checkEnrollment();
       } else {
-        console.warn('Course not found for ID:', this.courseId);
+
         this.isLoading = false;
         this.cdr.detectChanges();
       }
@@ -104,19 +104,19 @@ export class CourseDetails implements OnInit {
     if (this.course?.quizData && this.course.quizData.length > 5) {
       try {
         this.quizQuestions = JSON.parse(this.course.quizData);
-        console.log('Parsed quiz data:', this.quizQuestions);
+
       } catch (e) {
-        console.error('Error parsing quiz data', e);
+
       }
     }
   }
 
   checkEnrollment(): void {
     const userId = this.auth.getUserId();
-    console.log('Checking enrollment for user:', userId);
+
     
     if (!userId || userId === 0) {
-      console.warn('Invalid user ID, skipping enrollment check');
+
       this.isLoading = false;
       return;
     }
@@ -124,7 +124,7 @@ export class CourseDetails implements OnInit {
     this.courseService.getMyCourses(userId).pipe(
       timeout(10000),
       catchError(err => {
-        console.error('Error fetching enrollments:', err);
+
         return of([]);
       }),
       finalize(() => {
@@ -150,11 +150,11 @@ export class CourseDetails implements OnInit {
     this.isLoading = true;
     this.courseService.enroll(this.course.id, userId).subscribe({
       next: (res) => {
-        console.log('Enrollment successful:', res);
+
         this.checkEnrollment();
       },
       error: (err) => {
-        console.error('Enrollment failed:', err);
+
         this.isLoading = false;
         alert('Failed to enroll in course. Please try again.');
         this.cdr.detectChanges();
@@ -205,7 +205,7 @@ export class CourseDetails implements OnInit {
         }, 800);
       },
       error: (err) => {
-        console.error('Upload failed:', err);
+
         this.uploading = false;
         alert('Upload failed. Please try a smaller file.');
       }
@@ -232,7 +232,7 @@ export class CourseDetails implements OnInit {
         alert('YouTube URL updated successfully! 📺');
       },
       error: (err) => {
-        console.error('Failed to update URL:', err);
+
         this.isLoading = false;
         alert('Failed to update URL. Please check the server connection.');
       }
@@ -255,7 +255,7 @@ export class CourseDetails implements OnInit {
           alert('Quiz data updated successfully! 📝');
         },
         error: (err) => {
-          console.error('Failed to update quiz:', err);
+
           this.isLoading = false;
           alert('Failed to update quiz data.');
         }
@@ -273,7 +273,7 @@ export class CourseDetails implements OnInit {
   }
 
   answerQuiz(isCorrect: boolean): void {
-    console.log(`Quiz answered. isCorrect: ${isCorrect}, currentStep: ${this.quizStep}`);
+
     if (isCorrect === true || isCorrect === 'true' as any) {
         this.quizScore++;
     }

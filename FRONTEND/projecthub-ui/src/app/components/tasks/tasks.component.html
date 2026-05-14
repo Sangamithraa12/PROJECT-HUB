@@ -95,8 +95,6 @@
               </div>
             </div>
 
-            <!-- Proof Area Removed for cleaner integration -->
-
             <div class="task-controls">
               <div class="status-pill-container">
                 <select [value]="task.status" 
@@ -113,7 +111,6 @@
               </div>
 
               <div class="task-action-buttons">
-                <!-- Action: View Proof (If exists) -->
                 <a *ngIf="task.proofUrl" 
                    [href]="getFullUrl(task?.proofUrl)" 
                    target="_blank" 

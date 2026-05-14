@@ -82,7 +82,6 @@
   display: none;
 }
 
-/* Stats Row Styling */
 .task-stats-row {
   display: flex;
   gap: 1rem;
@@ -720,8 +719,6 @@
   color: #fff;
 }
 
-
-/* Proof Area Refined */
 .view-proof-btn {
   background: rgba(99, 102, 241, 0.1) !important;
   color: #818cf8 !important;
@@ -1396,5 +1393,4 @@
   color: var(--error);
 }
 
-/* Overdue Highlight removed old Kanban overrides */
 .kanban-board { display: none; }

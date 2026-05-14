@@ -4,7 +4,6 @@
   <main class="main-content" *ngIf="!isLoading; else loading">
     <div class="course-layout" *ngIf="course">
       
-      <!-- Header Section -->
       <header class="hero-section">
         <nav class="breadcrumb">
           <a routerLink="/courses">Learning Center</a>
@@ -55,10 +54,10 @@
         </article>
       </div>
 
-      <!-- Right Sidebar -->
+      
       <aside class="sidebar-sticky animate-slide-up">
         
-        <!-- Progress Widget -->
+        
         <section class="elite-card progress-widget" *ngIf="enrollment">
           <div class="card-label" style="justify-content: center;">
             <span>Your Mastery</span>
@@ -80,14 +79,12 @@
           </div>
         </section>
 
-        <!-- Enrollment Action (if not enrolled) -->
         <section class="elite-card" *ngIf="!enrollment" style="text-align: center;">
           <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Ready to Start?</h2>
           <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Join thousands of employees mastering {{ course.category }}.</p>
           <button class="elite-button btn-primary-glow" (click)="enroll()">Enroll Now</button>
         </section>
 
-        <!-- Curriculum Widget -->
         <section class="elite-card" style="padding: 1.5rem;">
           <div class="card-label">Curriculum</div>
           <div class="modules-scroll">
@@ -106,7 +103,6 @@
           </div>
         </section>
 
-        <!-- Admin Professional Toolkit -->
         <section class="elite-card admin-toolkit" *ngIf="isManager()">
           <div class="admin-header">Manager Toolkit</div>
           <div class="admin-input-group">
@@ -122,7 +118,6 @@
     </div>
   </main>
 
-  <!-- Immersive Quiz Overlay -->
   <div class="quiz-overlay animate-fade" *ngIf="showQuiz">
     <div class="quiz-card" *ngIf="quizQuestions.length > 0; else noQuiz">
       <div class="quiz-header">
@@ -154,7 +149,6 @@
     </ng-template>
   </div>
 
-  <!-- Skeleton Loading -->
   <ng-template #loading>
     <div class="main-content" style="align-items: center; justify-content: center;">
       <div class="spinner" style="width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>

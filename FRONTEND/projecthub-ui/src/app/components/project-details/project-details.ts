@@ -36,14 +36,13 @@ export class ProjectDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  // --- Task Explorer State ---
   showTaskDrawer: boolean = false;
   showTeamDrawer: boolean = false;
   activeTask: TaskItem | null = null;
   isUpdatingTaskStatus: boolean = false;
   currentUserId: number = 0;
 
-  teamMetrics: any[] = []; // Aggregated team metrics (can stay any for now or be interface)
+  teamMetrics: any[] = []; 
 
   ngOnInit(): void {
     this.userRole = this.auth.getUserRole();
@@ -158,14 +157,13 @@ export class ProjectDetailsComponent implements OnInit {
     return url.startsWith('http') ? url : `${environment.fileBaseUrl}${url}`;
   }
 
-  // --- Task Explorer Methods ---
 
   openTaskDrawer(task: TaskItem): void {
-    this.activeTask = { ...task }; // Set basic info first
+    this.activeTask = { ...task }; 
     this.showTaskDrawer = true;
     this.currentUserId = this.auth.getUserId();
     
-    // Fetch full details on-demand (e.g. description)
+   
     this.taskService.getTaskById(task.id).subscribe(fullTask => {
       this.activeTask = fullTask;
       this.cdr.detectChanges();

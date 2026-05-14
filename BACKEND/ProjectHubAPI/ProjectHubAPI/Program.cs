@@ -12,9 +12,10 @@ using ProjectHubAPI.Hubs;
 using System;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using System.Reflection;
+using MediatR;
 using ProjectHubAPI.Interfaces;
 using ProjectHubAPI.Repositories;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,6 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddSignalR();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 
 builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
@@ -39,6 +39,9 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
@@ -57,7 +60,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+var key = Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "secret_key_for_development_only_123456789");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -132,38 +135,6 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<AppDbContext>();
         context.Database.Migrate();
 
-        // Patch: Fix missing 'TargetRole' column which was added to model but missed in migrations
-        context.Database.ExecuteSqlRaw("IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Courses]') AND name = 'TargetRole') ALTER TABLE [Courses] ADD [TargetRole] nvarchar(max) NULL;");
-        
-        // Patch: Fix missing 'Enrollment' columns
-        context.Database.ExecuteSqlRaw("IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Enrollments]') AND name = 'IsMandatory') ALTER TABLE [Enrollments] ADD [IsMandatory] bit NOT NULL DEFAULT 0;");
-        context.Database.ExecuteSqlRaw("IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Enrollments]') AND name = 'AssignedById') ALTER TABLE [Enrollments] ADD [AssignedById] int NULL;");
-        context.Database.ExecuteSqlRaw("IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Enrollments]') AND name = 'DueDate') ALTER TABLE [Enrollments] ADD [DueDate] datetime2 NULL;");
-        
-        // Patch: Create Messages table manually with File support
-        context.Database.ExecuteSqlRaw(@"
-            IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Messages')
-            CREATE TABLE [Messages] (
-                [Id] int NOT NULL IDENTITY,
-                [SenderId] int NOT NULL,
-                [ReceiverId] int NOT NULL,
-                [Content] nvarchar(max) NULL,
-                [FileUrl] nvarchar(max) NULL,
-                [FileType] nvarchar(max) NULL,
-                [SentAt] datetime2 NOT NULL,
-                [IsRead] bit NOT NULL,
-                CONSTRAINT [PK_Messages] PRIMARY KEY ([Id]),
-                CONSTRAINT [FK_Messages_Users_ReceiverId] FOREIGN KEY ([ReceiverId]) REFERENCES [Users] ([Id]),
-                CONSTRAINT [FK_Messages_Users_SenderId] FOREIGN KEY ([SenderId]) REFERENCES [Users] ([Id])
-            );
-            ELSE
-            BEGIN
-                IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Messages]') AND name = 'FileUrl')
-                    ALTER TABLE [Messages] ADD [FileUrl] nvarchar(max) NULL;
-                IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[Messages]') AND name = 'FileType')
-                    ALTER TABLE [Messages] ADD [FileType] nvarchar(max) NULL;
-            END
-        ");
 
         DbInitializer.Seed(context);
     }

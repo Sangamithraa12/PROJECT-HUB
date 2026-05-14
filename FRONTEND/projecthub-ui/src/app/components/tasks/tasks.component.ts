@@ -90,7 +90,7 @@ export class TasksComponent implements OnInit {
 
   setFilter(status: string | null): void {
     if (this.filterStatus === status) {
-      this.filterStatus = null; // Clear if clicking same card
+      this.filterStatus = null; 
     } else {
       this.filterStatus = status;
     }
@@ -125,7 +125,6 @@ export class TasksComponent implements OnInit {
   get filteredTasks(): TaskItem[] {
     let filtered = this.tasks;
     
-    // 1. Status Filter (from clickable cards)
     if (this.filterStatus) {
       if (this.filterStatus === 'Overdue') {
         const now = new Date();
@@ -138,7 +137,6 @@ export class TasksComponent implements OnInit {
       }
     }
 
-    // 2. Search Filter
     if (this.searchTerm) {
       filtered = filtered.filter(t => 
         t.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
@@ -148,7 +146,6 @@ export class TasksComponent implements OnInit {
     return filtered;
   }
 
-  // Helper arrays for internal use if needed, though they now follow filteredTasks
   get pendingTasksCount(): number { return this.tasks.filter(t => t.status === 'Pending').length; }
   get inProgressTasksCount(): number { return this.tasks.filter(t => t.status === 'In Progress').length; }
   get completedTasksCount(): number { return this.tasks.filter(t => t.status === 'Completed').length; }
@@ -184,19 +181,18 @@ export class TasksComponent implements OnInit {
     event.preventDefault();
     if (this.draggedTask && this.draggedTask.status !== status) {
       if (this.userRole === 'Employee' && this.draggedTask.assignedTo !== this.currentUserId) {
-        return; // Employee can only move their own tasks
+        return; 
       }
-      // Instantly update UI for perceived performance
+      
       const prevStatus = this.draggedTask.status;
       this.draggedTask.status = status;
       this.updateLocalArrays();
       
       this.taskService.updateStatus(this.draggedTask.id, status).subscribe({
         next: () => {
-          this.loadTasks(); // refresh from server
+          this.loadTasks();
         },
         error: () => {
-          // Revert on error
           if (this.draggedTask) this.draggedTask.status = prevStatus;
           this.updateLocalArrays();
           alert('Failed to update task status.');
@@ -479,7 +475,6 @@ export class TasksComponent implements OnInit {
     if (!task.dueDate || task.status === 'Completed') return false;
     const due = new Date(task.dueDate);
     const now = new Date();
-    // High priority if due within 48 hours or already overdue
     const diffTime = due.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     return diffDays <= 2;

@@ -456,7 +456,7 @@ namespace ProjectHubAPI.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            // For modules, we wrap it in a video tag or just return the URL
+            
             module.Content = $"<video width=\"100%\" controls class=\"premium-video\"><source src=\"/uploads/modules/{fileName}\" type=\"video/mp4\">Your browser does not support the video tag.</video>";
             await _context.SaveChangesAsync();
 

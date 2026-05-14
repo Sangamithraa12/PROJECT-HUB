@@ -19,7 +19,6 @@
       </div>
     </header>
 
-    <!-- Phase 10: Elite Stats Grid -->
     <div class="stats-overview-grid animate-fade">
       <div class="stat-card glass-card-inset clickable" (click)="scrollToTasks()">
         <div class="stat-icon tasks">📋</div>
@@ -151,7 +150,6 @@
         </div>
       </section>
 
-      <!-- Task Proofs Sub-section (Enhanced Vertical Cards) -->
       <section class="proofs-sub-section animate-fade" *ngIf="hasTaskProofs()">
         <div class="sub-header">
           <h4><span class="title-icon">📂</span> Submission Archives</h4>
@@ -182,7 +180,6 @@
     </div>
   </main>
 
-  <!-- Phase 11: Elite Task Explorer Side-Drawer -->
   <div class="task-drawer-overlay" [class.active]="showTaskDrawer" (click)="closeTaskDrawer()">
     <div class="task-explorer-drawer glass-card" (click)="$event.stopPropagation()">
       <div class="drawer-header">
@@ -194,7 +191,6 @@
       </div>
 
       <div class="drawer-content" *ngIf="activeTask">
-        <!-- Task Info Card -->
         <div class="explorer-task-info glass-card-inset">
           <div class="info-top">
             <span class="task-id">TASK #{{ activeTask.id }}</span>

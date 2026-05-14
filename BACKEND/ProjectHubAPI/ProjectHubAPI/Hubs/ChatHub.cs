@@ -7,7 +7,6 @@ namespace ProjectHubAPI.Hubs
     {
         public async Task SendMessage(string receiverId, object messageData)
         {
-            // Send message data (including potential file info) to a specific user group
             await Clients.Group(receiverId).SendAsync("ReceiveMessage", Context.UserIdentifier, messageData);
         }
 

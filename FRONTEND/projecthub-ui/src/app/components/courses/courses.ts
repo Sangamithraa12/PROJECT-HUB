@@ -105,7 +105,7 @@ export class Courses implements OnInit {
     if (event) {
       const target = event.target as HTMLElement;
       if (target.tagName.toLowerCase() === 'button' || target.closest('button')) {
-        return; // Prevent navigation if a button was clicked
+        return;
       }
     }
     this.router.navigate(['/courses', courseId]);

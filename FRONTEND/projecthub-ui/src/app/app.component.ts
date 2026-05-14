@@ -34,7 +34,7 @@ export class AppComponent {
           };
           this.showToast = true;
           
-          // Auto-hide after 5 seconds
+        
           setTimeout(() => {
             this.showToast = false;
             setTimeout(() => this.activeToast = null, 500);

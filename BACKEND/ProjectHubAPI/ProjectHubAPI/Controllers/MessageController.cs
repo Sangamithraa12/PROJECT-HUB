@@ -70,7 +70,7 @@ namespace ProjectHubAPI.Controllers
 
                 _context.Messages.Add(message);
                 
-                // Add persistent notification for receiver
+                
                 var sender = await _context.Users.FindAsync(userId);
                 var notification = new Notification
                 {
@@ -80,7 +80,7 @@ namespace ProjectHubAPI.Controllers
                     Type = "Chat",
                     CreatedAt = DateTime.UtcNow,
                     IsRead = false,
-                    RelatedId = userId // Reference to sender
+                    RelatedId = userId 
                 };
                 _context.Notifications.Add(notification);
 
@@ -130,7 +130,7 @@ namespace ProjectHubAPI.Controllers
 
                 _context.Messages.Add(message);
                 
-                // Add persistent notification for receiver
+               
                 var sender = await _context.Users.FindAsync(userId);
                 var notification = new Notification
                 {
@@ -140,7 +140,7 @@ namespace ProjectHubAPI.Controllers
                     Type = "Chat",
                     CreatedAt = DateTime.UtcNow,
                     IsRead = false,
-                    RelatedId = userId // Reference to sender
+                    RelatedId = userId 
                 };
                 _context.Notifications.Add(notification);
 

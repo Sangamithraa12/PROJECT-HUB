@@ -122,11 +122,10 @@ namespace ProjectHubAPI.Data
                 context.SaveChanges();
             }
 
-            // Seed Modules and restore missing QuizData for all courses
+           
             var courses = context.Courses.ToList();
             foreach (var course in courses)
             {
-                // Ensure QuizData is present (it might be missing if courses were seeded earlier)
                 if (string.IsNullOrEmpty(course.QuizData) || course.QuizData.Length < 10)
                 {
                     if (course.Title.Contains("Angular"))
@@ -143,7 +142,7 @@ namespace ProjectHubAPI.Data
                         course.QuizData = "[{\"question\":\"What is 'Resource Allocation'?\",\"options\":[{\"text\":\"Hiring more people\",\"isCorrect\":false},{\"text\":\"Assigning the right person to the right task\",\"isCorrect\":true},{\"text\":\"Buying more equipment\",\"isCorrect\":false},{\"text\":\"Increasing the budget\",\"isCorrect\":false}]}]";
                 }
 
-                // Force update video URLs to reliable working ones
+                
                 if (course.Title.Contains("Angular")) course.VideoUrl = "https://www.youtube.com/embed/3qBXWUpoPHo";
                 else if (course.Title.Contains(".NET")) course.VideoUrl = "https://www.youtube.com/embed/C5cnZ-gZy2I";
                 else if (course.Title.Contains("UI/UX")) course.VideoUrl = "https://www.youtube.com/embed/c9Wg6Cb_YlU";

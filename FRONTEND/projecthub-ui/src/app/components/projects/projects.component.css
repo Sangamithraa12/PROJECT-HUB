@@ -25,7 +25,6 @@
               border-color 0.35s ease;
 }
 
-/* shimmer streak on top */
 .project-card::before {
   content: '';
   position: absolute;

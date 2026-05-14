@@ -3,7 +3,6 @@
 </div>
 <app-chatbot></app-chatbot>
 
-<!-- WhatsApp Style In-App Notification -->
 <div class="whatsapp-toast" *ngIf="activeToast" [class.show]="showToast">
   <div class="toast-content">
     <div class="toast-avatar">{{ activeToast.senderName.substring(0,1) }}</div>

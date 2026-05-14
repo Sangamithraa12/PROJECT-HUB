@@ -1,5 +1,3 @@
-/* Course Details Elite UI - Refined Modern Standard */
-
 .dashboard-container {
   min-height: 100vh;
   background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent),
@@ -79,7 +77,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Video Stage */
+
 .video-stage {
   background: #000;
   border-radius: 20px;
@@ -155,7 +153,7 @@
   font-size: 1rem;
 }
 
-/* Curriculum Section */
+
 .curriculum-list {
   display: flex;
   flex-direction: column;
@@ -209,7 +207,7 @@
   flex: 1;
 }
 
-/* Right Sidebar: Progress & Stats */
+
 .sidebar-sticky {
   position: sticky;
   top: 0;
@@ -297,7 +295,7 @@
   border-color: var(--primary);
 }
 
-/* Admin Panel */
+
 .admin-toolkit {
   border-top: 1px solid rgba(255,255,255,0.05);
   padding-top: 2rem;
@@ -334,7 +332,6 @@
   border-color: var(--primary);
 }
 
-/* Animations */
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -349,7 +346,6 @@
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Custom Scrollbar */
 .modules-scroll {
   max-height: 480px;
   overflow-y: auto;
@@ -383,7 +379,7 @@
   }
 }
 
-/* Immersive Quiz Overlay */
+
 .quiz-overlay {
   position: fixed;
   inset: 0;

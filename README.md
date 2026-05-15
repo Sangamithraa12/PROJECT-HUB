@@ -295,9 +295,10 @@ Secure login page for Admins, Managers, and Employees.
 - Productivity analytics
 - Real-time activity monitoring
 
-<img width="1366" height="768" alt="Screenshot (636)(1)" src="https://github.com/user-attachments/assets/79daf564-7c10-44cd-9e96-04bb13151579" />
+<img width="1366" height="636" alt="Screenshot (639)(1)" src="https://github.com/user-attachments/assets/c8132b17-ca36-48d4-bdba-d50247aadfe7" />
 
-<img width="1366" height="768" alt="Screenshot (638)(1)" src="https://github.com/user-attachments/assets/8809282c-20b2-4fa4-9924-e1496ea11d73" />
+
+<img width="1347" height="632" alt="Screenshot (640)(1)(1)" src="https://github.com/user-attachments/assets/48aa8753-b358-46bd-84b0-8a01dd93c1b6" />
 
 
 ---

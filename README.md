@@ -359,7 +359,8 @@ Secure login page for Admins, Managers, and Employees.
 - Learning resource access
 - Employee training platform
 
-<img width="1366" height="768" alt="Screenshot (628)(1)" src="https://github.com/user-attachments/assets/2ef7ba97-b7b9-48ac-abe6-a8fa19396d8c" />
+<img width="1366" height="624" alt="Screenshot (642)(1)(1)" src="https://github.com/user-attachments/assets/d8fd3bf8-06c2-4c8e-8201-f8acd0426548" />
+
 ---
 
 ## 📚 Course Details Page (`/courses/:id`)

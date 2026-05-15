@@ -282,6 +282,8 @@ Secure login page for Admins, Managers, and Employees.
 - JWT Authentication
 - Role-based access control
 - Secure route protection
+  
+<img width="1354" height="636" alt="Screenshot (635)(1)" src="https://github.com/user-attachments/assets/bcca457f-8e68-4037-96f8-33f23a3a8885" />
 
 ---
 
@@ -292,6 +294,11 @@ Secure login page for Admins, Managers, and Employees.
 - Employee leaderboard
 - Productivity analytics
 - Real-time activity monitoring
+
+<img width="1366" height="768" alt="Screenshot (636)(1)" src="https://github.com/user-attachments/assets/79daf564-7c10-44cd-9e96-04bb13151579" />
+
+<img width="1366" height="768" alt="Screenshot (638)(1)" src="https://github.com/user-attachments/assets/8809282c-20b2-4fa4-9924-e1496ea11d73" />
+
 
 ---
 
@@ -314,6 +321,12 @@ Secure login page for Admins, Managers, and Employees.
 - Project workflow monitoring
 - Related task management
 
+<img width="1366" height="627" alt="Screenshot (626)(1)" src="https://github.com/user-attachments/assets/2e76b1b9-b766-4f36-89f0-de406044126d" />
+
+
+<img width="1366" height="631" alt="Screenshot (627)(1)" src="https://github.com/user-attachments/assets/8cee90ea-732a-4e5e-a5e5-a95ed1dcdb75" />
+
+
 ---
 
 ## ✅ Tasks Page / Kanban Board (`/tasks`)
@@ -322,6 +335,9 @@ Secure login page for Admins, Managers, and Employees.
 - Real-time synchronization
 - Task prioritization
 - Workflow tracking
+
+<img width="1366" height="626" alt="Screenshot (618)(1)" src="https://github.com/user-attachments/assets/5310c7da-af0f-4295-b32b-ed4c639e3c65" />
+
 
 ---
 
@@ -341,6 +357,7 @@ Secure login page for Admins, Managers, and Employees.
 - Learning resource access
 - Employee training platform
 
+<img width="1366" height="768" alt="Screenshot (628)(1)" src="https://github.com/user-attachments/assets/2ef7ba97-b7b9-48ac-abe6-a8fa19396d8c" />
 ---
 
 ## 📚 Course Details Page (`/courses/:id`)
@@ -349,6 +366,9 @@ Secure login page for Admins, Managers, and Employees.
 - Study materials
 - Learning modules
 - Course progress tracking
+
+<img width="1366" height="633" alt="Screenshot (631)(1)" src="https://github.com/user-attachments/assets/0fbe2229-d367-4f77-b9f0-7f540678ffe6" />
+
 
 ---
 
@@ -359,6 +379,9 @@ Secure login page for Admins, Managers, and Employees.
 - Continue training modules
 - Completion percentage tracking
 
+<img width="1366" height="614" alt="Screenshot (629)(1)" src="https://github.com/user-attachments/assets/7649f7b2-221f-414e-8648-a6110364b3c9" />
+
+
 ---
 
 ## 🏆 Certificates Page (`/certificates`)
@@ -367,6 +390,8 @@ Secure login page for Admins, Managers, and Employees.
 - Achievement tracking
 - Course completion rewards
 - Employee recognition system
+
+<img width="1366" height="768" alt="Screenshot (632)(1)" src="https://github.com/user-attachments/assets/41b1a413-6726-4480-afec-360239613165" />
 
 ---
 
@@ -377,6 +402,8 @@ Secure login page for Admins, Managers, and Employees.
 - Real-time live chat
 - Instant message delivery
 
+<img width="1366" height="768" alt="Screenshot (633)(1)" src="https://github.com/user-attachments/assets/b9849a1b-a564-4bcb-bc32-0d2029d82d5f" />
+
 ---
 
 ## 🔔 Notification System
@@ -385,6 +412,9 @@ Secure login page for Admins, Managers, and Employees.
 - Deadline reminders
 - Status change notifications
 - Real-time activity updates
+
+<img width="1366" height="768" alt="Screenshot (634)(1)" src="https://github.com/user-attachments/assets/844c7f99-4f0c-4ede-9d79-961562417b78" />
+
 
 ---
 

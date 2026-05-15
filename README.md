@@ -394,7 +394,8 @@ Secure login page for Admins, Managers, and Employees.
 - Course completion rewards
 - Employee recognition system
 
-<img width="1366" height="768" alt="Screenshot (632)(1)" src="https://github.com/user-attachments/assets/41b1a413-6726-4480-afec-360239613165" />
+<img width="1366" height="623" alt="Screenshot (643)(1)(1)" src="https://github.com/user-attachments/assets/beca10dc-b28a-4730-b244-bd417e287a2d" />
+
 
 ---
 

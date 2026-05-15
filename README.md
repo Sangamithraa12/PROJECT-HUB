@@ -310,7 +310,8 @@ Secure login page for Admins, Managers, and Employees.
 - Monitor project status
 - Track project progress
 
-  <img width="1288" height="688" alt="Screenshot (616)(1)" src="https://github.com/user-attachments/assets/24ec1b30-364e-456c-befc-e247e426aa77" />
+  <img width="1366" height="634" alt="Screenshot (641)(1)" src="https://github.com/user-attachments/assets/184c2105-03ae-46cc-816b-e51e64cffd41" />
+
 
 
 ---

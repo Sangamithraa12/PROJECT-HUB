@@ -2,7 +2,7 @@
 
 A full-stack enterprise-grade Project Management, Task Collaboration, and Employee Learning platform built using Angular and ASP.NET Core.
 
-ProjectHub combines project tracking, real-time communication, employee collaboration, and LMS functionality into a single scalable platform designed with clean architecture principles and enterprise-grade backend patterns.
+ProjectHub combines project tracking, real-time communication, employee collaboration, and LMS functionality into a single scalable platform designed with clean architecture principles and enterprise-level backend architecture.
 
 ---
 
@@ -12,6 +12,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Create, update, and manage projects
 - Assign managers and employees
 - Track project progress and status
+- Monitor project workflows efficiently
 
 ---
 
@@ -20,6 +21,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Task prioritization and status tracking
 - Employee task assignment
 - Real-time task updates
+- Agile workflow management
 
 ---
 
@@ -27,6 +29,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Instant messaging between users
 - Real-time communication without refresh
 - Live chat updates using SignalR hubs
+- Faster team collaboration
 
 ---
 
@@ -34,6 +37,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Instant task assignment alerts
 - Real-time status notifications
 - SignalR-powered notification delivery
+- Live activity updates
 
 ---
 
@@ -41,6 +45,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Employee productivity tracking
 - Performance-based ranking system
 - Dynamic leaderboard updates
+- Task completion analytics
 
 ---
 
@@ -48,30 +53,63 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 - Upload and manage learning resources
 - Employee course enrollment
 - Training progress tracking
+- Centralized learning platform
 
 ---
 
-## 🔐 Role-Based Access Control
+# 📊 Dashboards
 
-### Admin
+## 👑 Admin Dashboard
+- Manage users and roles
+- Monitor projects and tasks
+- Manage courses and LMS resources
+- Track employee productivity
+- View real-time notifications and updates
+
+### Purpose
+Provides complete control and monitoring over the entire platform.
+
+---
+
+## 👨‍💼 Manager Dashboard
+- Create and manage projects
+- Assign tasks to employees
+- Monitor team performance
+- Track project progress
+- Access real-time chat and notifications
+
+### Purpose
+Helps managers efficiently coordinate teams and workflows.
+
+---
+
+## 👩‍💻 Employee Dashboard
+- View assigned tasks
+- Update task status and progress
+- Access Kanban board
+- Receive live notifications
+- Access LMS learning resources
+
+### Purpose
+Helps employees manage daily work, collaboration, and learning activities.
+
+---
+
+# 🔐 Role-Based Access Control
+
+### 👑 Admin
 - Full system access
 - Manage users, projects, tasks, and courses
 
-### Manager
+### 👨‍💼 Manager
 - Create and manage projects/tasks
 - Assign work to employees
+- Monitor team progress
 
-### Employee
+### 👩‍💻 Employee
 - View assigned tasks
 - Update task status
 - Access learning materials
-
----
-
-## 🧪 Unit Testing
-- xUnit testing framework
-- Moq for dependency mocking
-- Service-layer unit testing
 
 ---
 
@@ -86,6 +124,8 @@ ASP.NET Core Controllers
         ↓
 MediatR (CQRS)
         ↓
+Service Layer
+        ↓
 Repository Layer
         ↓
 Entity Framework Core
@@ -97,51 +137,107 @@ SQL Server
 
 # ⚙️ Tech Stack
 
-| Layer                   | Technology            |
-| ----------------------- | --------------------- |
-| Frontend                | Angular 17+           |
-| Backend                 | ASP.NET Core Web API  |
-| Database                | SQL Server Express    |
-| ORM                     | Entity Framework Core |
-| Authentication          | JWT Bearer Tokens     |
-| Real-time Communication | SignalR               |
-| Validation              | FluentValidation      |
-| Mapping                 | Mapster               |
-| Mediator Pattern        | MediatR               |
-| Testing                 | xUnit + Moq           |
+| Layer | Technology |
+|-------|------------|
+| Frontend | Angular 17+ |
+| Backend | ASP.NET Core Web API |
+| Database | SQL Server Express |
+| ORM | Entity Framework Core |
+| Authentication | JWT Bearer Tokens |
+| Real-time Communication | SignalR |
+| Validation | FluentValidation |
+| Mapping | Mapster |
+| Mediator Pattern | MediatR |
+| Testing | xUnit + Moq |
 
 ---
 
 # 🏗️ Backend Architecture
 
-The backend follows:
+The backend follows modern enterprise architecture patterns:
 
-* Clean Architecture
-* CQRS (Command Query Responsibility Segregation)
-* Repository Pattern
-* Service-Oriented Design
-* Dependency Injection
-* Global Exception Handling Middleware
+- Clean Architecture
+- CQRS (Command Query Responsibility Segregation)
+- Repository Pattern
+- Service-Oriented Design
+- Dependency Injection
+- Global Exception Handling Middleware
+
+### Benefits
+- Scalable architecture
+- Better maintainability
+- Clean separation of concerns
+- Easier testing and debugging
 
 ---
 
 # 📂 Project Structure
 
 ```text
-BACKEND/
+ProjectHub/
 │
-├── Controllers/        → API Endpoints
-├── Features/           → CQRS Commands & Queries
-├── Repositories/       → Database Access Layer
-├── Services/           → Business Logic
-├── DTOs/               → Data Transfer Objects
-├── Models/             → Entity Models
-├── Middleware/         → Global Exception Handling
-├── Validators/         → FluentValidation Rules
-├── Hubs/               → SignalR Real-time Hubs
-├── Mapping/            → Mapster Configuration
-├── Data/               → DbContext & Migrations
-└── Program.cs          → Startup Configuration
+├── FRONTEND/
+│   └── projecthub-ui/
+│       │
+│       ├── src/
+│       │   ├── app/
+│       │   │   ├── components/       → Reusable UI Components
+│       │   │   ├── pages/            → Application Pages
+│       │   │   ├── services/         → API Communication Services
+│       │   │   ├── guards/           → Route Protection
+│       │   │   ├── interceptors/     → JWT Token Interceptors
+│       │   │   ├── models/           → Frontend Models & Interfaces
+│       │   │   ├── shared/           → Shared Modules & Utilities
+│       │   │   └── app.routes.ts     → Angular Routing
+│       │   │
+│       │   ├── assets/               → Images & Static Files
+│       │   └── environments/         → Environment Configuration
+│       │
+│       ├── angular.json              → Angular Configuration
+│       ├── package.json              → Dependencies & Scripts
+│       └── tsconfig.json             → TypeScript Configuration
+│
+└── BACKEND/
+    └── ProjectHubAPI/
+        │
+        ├── Controllers/              → API Endpoints
+        ├── Features/                 → CQRS Commands & Queries
+        ├── Repositories/             → Database Access Layer
+        ├── Services/                 → Business Logic
+        ├── DTOs/                     → Data Transfer Objects
+        ├── Models/                   → Entity Models
+        ├── Middleware/               → Global Exception Handling
+        ├── Validators/               → FluentValidation Rules
+        ├── Hubs/                     → SignalR Real-time Hubs
+        ├── Mapping/                  → Mapster Configuration
+        ├── Data/                     → DbContext & Migrations
+        ├── Interfaces/               → Service & Repository Contracts
+        ├── Authentication/           → JWT Authentication Logic
+        └── Program.cs                → Startup Configuration
+```
+
+---
+
+# 🔄 Application Workflow
+
+```text
+User Action
+    ↓
+Angular Frontend
+    ↓
+API Request with JWT Token
+    ↓
+ASP.NET Core Controllers
+    ↓
+MediatR (CQRS)
+    ↓
+Service Layer
+    ↓
+Repository Layer
+    ↓
+Entity Framework Core
+    ↓
+SQL Server Database
 ```
 
 ---
@@ -164,20 +260,21 @@ BACKEND/
 
 SignalR is used for:
 
-* Real-time chat
-* Live notifications
-* Instant UI updates
-* Task assignment alerts
+- Real-time chat
+- Live notifications
+- Instant UI updates
+- Task assignment alerts
+- Dynamic updates without refresh
 
 ---
 
 # 🛡️ Security Features
 
-* JWT Stateless Authentication
-* BCrypt Password Hashing
-* Role-based Authorization
-* Global Exception Middleware
-* Secure API Endpoints
+- JWT Stateless Authentication
+- BCrypt Password Hashing
+- Role-based Authorization
+- Global Exception Middleware
+- Secure API Endpoints
 
 ---
 
@@ -241,26 +338,26 @@ dotnet test
 
 # 🌟 Key Technical Highlights
 
-* Enterprise-style layered architecture
-* CQRS with MediatR
-* Real-time SignalR communication
-* JWT-based stateless authentication
-* Global exception middleware
-* Repository pattern implementation
-* Unit testing with xUnit and Moq
-* FluentValidation-based request validation
-* Angular standalone component architecture
+- Enterprise-style layered architecture
+- CQRS with MediatR
+- Real-time SignalR communication
+- JWT-based stateless authentication
+- Repository pattern implementation
+- Global exception handling middleware
+- Unit testing with xUnit and Moq
+- FluentValidation-based request validation
+- Angular standalone component architecture
 
 ---
 
 # 📌 Future Enhancements
 
-* Docker containerization
-* Redis caching
-* Email notifications
-* Azure deployment
-* Microservices architecture
-* AI-powered productivity analytics
+- Docker containerization
+- Redis caching
+- Email notifications
+- Azure deployment
+- Microservices architecture
+- AI-powered productivity analytics
 
 ---
 

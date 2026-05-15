@@ -340,6 +340,8 @@ Secure login page for Admins, Managers, and Employees.
 
 <img width="1366" height="626" alt="Screenshot (618)(1)" src="https://github.com/user-attachments/assets/5310c7da-af0f-4295-b32b-ed4c639e3c65" />
 
+<img width="1366" height="635" alt="Screenshot (646)(1)" src="https://github.com/user-attachments/assets/796737cc-77e1-47dd-ae9a-6bcab1b8978d" />
+
 
 ---
 

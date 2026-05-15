@@ -282,8 +282,6 @@ Secure login page for Admins, Managers, and Employees.
 - JWT Authentication
 - Role-based access control
 - Secure route protection
-  <img width="1366" height="768" alt="Screenshot (612)" src="https://github.com/user-attachments/assets/c8fe8fd4-458b-4eae-93f4-d97513a31ac2" />
-
 
 ---
 
@@ -303,6 +301,9 @@ Secure login page for Admins, Managers, and Employees.
 - Assign employees and managers
 - Monitor project status
 - Track project progress
+
+  <img width="1288" height="688" alt="Screenshot (616)(1)" src="https://github.com/user-attachments/assets/24ec1b30-364e-456c-befc-e247e426aa77" />
+
 
 ---
 

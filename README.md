@@ -406,7 +406,8 @@ Secure login page for Admins, Managers, and Employees.
 - Real-time live chat
 - Instant message delivery
 
-<img width="1366" height="768" alt="Screenshot (633)(1)" src="https://github.com/user-attachments/assets/b9849a1b-a564-4bcb-bc32-0d2029d82d5f" />
+<img width="1366" height="593" alt="Screenshot (644)(1)" src="https://github.com/user-attachments/assets/dd2974fc-ebf7-452a-a1cc-85075db09970" />
+
 
 ---
 
@@ -417,7 +418,7 @@ Secure login page for Admins, Managers, and Employees.
 - Status change notifications
 - Real-time activity updates
 
-<img width="1366" height="768" alt="Screenshot (634)(1)" src="https://github.com/user-attachments/assets/844c7f99-4f0c-4ede-9d79-961562417b78" />
+<img width="1328" height="629" alt="Screenshot (645)(1)" src="https://github.com/user-attachments/assets/45388f24-fd64-4c5d-8c03-80211cff718e" />
 
 
 ---

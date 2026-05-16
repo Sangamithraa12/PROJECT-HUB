@@ -23,50 +23,49 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 
 ---
 
-#ProjectHub/
+ProjectHub/
 │
 ├── FRONTEND/
 │   └── projecthub-ui/
-│       │
 │       ├── src/
 │       │   ├── app/
-│       │   │   ├── components/       → Reusable UI Components
-│       │   │   ├── pages/            → Application Pages
-│       │   │   ├── services/         → API Communication Services
-│       │   │   ├── guards/           → Route Protection
-│       │   │   ├── interceptors/     → JWT Token Interceptors
-│       │   │   ├── models/           → Frontend Models & Interfaces
-│       │   │   ├── shared/           → Shared Modules & Utilities
-│       │   │   └── app.routes.ts     → Angular Routing
-│       │   │
-│       │   ├── assets/               → Images & Static Files
-│       │   └── environments/         → Environment Configuration
+│       │   ├── components/
+│       │   ├── pages/
+│       │   ├── services/
+│       │   ├── guards/
+│       │   ├── interceptors/
+│       │   ├── models/
+│       │   ├── shared/
+│       │   └── app.routes.ts
 │       │
-│       ├── angular.json              → Angular Configuration
-│       ├── package.json              → Dependencies & Scripts
-│       └── tsconfig.json             → TypeScript Configuration
+│       ├── assets/
+│       └── environments/
+│
+│       ├── angular.json
+│       ├── package.json
+│       └── tsconfig.json
 │
 └── BACKEND/
     └── ProjectHubAPI/
-        │
-        ├── Common/                  → Shared utilities & responses
-        ├── Controllers/             → API Endpoints
-        ├── Data/                    → DbContext & database setup
-        ├── DTOs/                    → Data Transfer Objects
-        ├── Extensions/             → Service registration helpers
-        ├── Features/               → CQRS / Vertical Slice logic
+        ├── Common/
+        ├── Controllers/
+        ├── Data/
+        ├── DTOs/
+        ├── Extensions/
+        ├── Features/
         │   ├── Projects/
         │   └── Tasks/
-        │
-        ├── Hubs/                   → SignalR Real-time communication
-        ├── Interfaces/             → Service & repository contracts
-        ├── Mapping/                → Mapster configuration
-        ├── Models/                 → Entity models
-        ├── Repositories/           → Data access layer
-        ├── Services/               → Business logic layer
-        ├── Middleware/             → Global exception handling
-        ├── wwwroot/                → Static files/uploads
-        └── Program.cs             → Application startup
+        ├── Hubs/
+        ├── Interfaces/
+        ├── Mapping/
+        ├── Models/
+        ├── Repositories/
+        ├── Services/
+        ├── Middleware/
+        ├── Validators/
+        ├── Authentication/
+        ├── wwwroot/
+        └── Program.cs
 ---
 
 # 🔄 Application Workflow

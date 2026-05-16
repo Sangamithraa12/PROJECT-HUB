@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Http;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 using System;
 using System.Net;
 using System.Text.Json;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ProjectHubAPI.Middleware
+namespace ProjectHubAPI.Common.Exceptions
 {
     public class ExceptionMiddleware
     {
@@ -48,3 +48,5 @@ namespace ProjectHubAPI.Middleware
         }
     }
 }
+
+

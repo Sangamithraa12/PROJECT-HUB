@@ -1,5 +1,5 @@
 using ProjectHubAPI.DTOs;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
@@ -17,3 +17,4 @@ namespace ProjectHubAPI.Services
         Task<ServiceResponse<string>> UploadProjectFolderAsync(int id, List<ProjectFileData> files);
     }
 }
+

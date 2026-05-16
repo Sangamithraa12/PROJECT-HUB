@@ -1,14 +1,38 @@
 using MediatR;
 using ProjectHubAPI.DTOs;
 using ProjectHubAPI.Interfaces;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 using MapsterMapper;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ProjectHubAPI.Features.Projects.Queries
 {
+    // ─── Query Definition ───────────────────────────────────────────────────────
+    public record GetAllProjectsQuery() : IRequest<ServiceResponse<IEnumerable<ProjectDto>>>;
+
     public record GetProjectByIdQuery(int Id) : IRequest<ServiceResponse<ProjectDto>>;
+
+    // ─── Handlers ────────────────────────────────────────────────────────────────
+    public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, ServiceResponse<IEnumerable<ProjectDto>>>
+    {
+        private readonly IProjectRepository _projectRepo;
+        private readonly IMapper _mapper;
+
+        public GetAllProjectsHandler(IProjectRepository projectRepo, IMapper mapper)
+        {
+            _projectRepo = projectRepo;
+            _mapper = mapper;
+        }
+
+        public async Task<ServiceResponse<IEnumerable<ProjectDto>>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
+        {
+            var projects = await _projectRepo.GetAllAsync();
+            var data = _mapper.Map<IEnumerable<ProjectDto>>(projects);
+            return ServiceResponse<IEnumerable<ProjectDto>>.Ok(data);
+        }
+    }
 
     public class GetProjectByIdHandler : IRequestHandler<GetProjectByIdQuery, ServiceResponse<ProjectDto>>
     {
@@ -38,3 +62,4 @@ namespace ProjectHubAPI.Features.Projects.Queries
         }
     }
 }
+

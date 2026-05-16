@@ -1,6 +1,6 @@
 using ProjectHubAPI.DTOs;
 using ProjectHubAPI.Models;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 using ProjectHubAPI.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MapsterMapper;
+using Microsoft.AspNetCore.SignalR;
+using ProjectHubAPI.Hubs;
 
 namespace ProjectHubAPI.Services
 {
@@ -23,17 +25,20 @@ namespace ProjectHubAPI.Services
         private readonly ITaskRepository _taskRepo;
         private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment _env;
         private readonly IMapper _mapper;
+        private readonly IHubContext<ChatHub> _hubContext;
 
         public ProjectService(
             IProjectRepository projectRepo, 
             ITaskRepository taskRepo,
             Microsoft.AspNetCore.Hosting.IWebHostEnvironment env, 
-            IMapper mapper)
+            IMapper mapper,
+            IHubContext<ChatHub> hubContext)
         {
             _projectRepo = projectRepo;
             _taskRepo = taskRepo;
             _env = env;
             _mapper = mapper;
+            _hubContext = hubContext;
         }
 
         public async Task<ServiceResponse<IEnumerable<ProjectDto>>> GetAllProjectsAsync()
@@ -67,6 +72,7 @@ namespace ProjectHubAPI.Services
 
             await _projectRepo.AddAsync(project);
             await _projectRepo.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("RefreshProjects");
 
             var result = _mapper.Map<ProjectDto>(project);
             return ServiceResponse<ProjectDto>.Ok(result, "Project created successfully");
@@ -80,6 +86,7 @@ namespace ProjectHubAPI.Services
             _mapper.Map(dto, project);
             await _projectRepo.UpdateAsync(project);
             await _projectRepo.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("RefreshProjects");
 
             var result = _mapper.Map<ProjectDto>(project);
             return ServiceResponse<ProjectDto>.Ok(result, "Project updated successfully");
@@ -92,6 +99,7 @@ namespace ProjectHubAPI.Services
 
             await _projectRepo.DeleteAsync(project);
             await _projectRepo.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("RefreshProjects");
             return ServiceResponse<bool>.Ok(true, "Project deleted successfully");
         }
 
@@ -147,3 +155,4 @@ namespace ProjectHubAPI.Services
         }
     }
 }
+

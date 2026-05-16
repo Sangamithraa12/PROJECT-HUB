@@ -5,7 +5,7 @@ using MediatR;
 using ProjectHubAPI.DTOs;
 using ProjectHubAPI.Features.Projects.Commands;
 using ProjectHubAPI.Features.Projects.Queries;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 using ProjectHubAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,3 +82,4 @@ namespace ProjectHubAPI.Controllers
         }
     }
 }
+

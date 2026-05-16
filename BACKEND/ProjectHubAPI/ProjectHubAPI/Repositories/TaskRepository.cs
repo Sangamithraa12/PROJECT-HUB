@@ -19,12 +19,16 @@ namespace ProjectHubAPI.Repositories
 
         public async Task<IEnumerable<TaskItem>> GetAllAsync()
         {
-            return await _context.Tasks.AsNoTracking().ToListAsync();
+            return await _context.Tasks
+                .Include(t => t.AssignedUser)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> GetByProjectIdAsync(int projectId)
         {
             return await _context.Tasks
+                .Include(t => t.AssignedUser)
                 .AsNoTracking()
                 .Where(t => t.ProjectId == projectId)
                 .ToListAsync();
@@ -32,7 +36,9 @@ namespace ProjectHubAPI.Repositories
 
         public async Task<TaskItem?> GetByIdAsync(int id)
         {
-            return await _context.Tasks.FindAsync(id);
+            return await _context.Tasks
+                .Include(t => t.AssignedUser)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task AddAsync(TaskItem task)

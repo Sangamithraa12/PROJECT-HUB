@@ -1,4 +1,4 @@
-namespace ProjectHubAPI.Models.Common
+namespace ProjectHubAPI.Common.Responses
 {
     public class ServiceResponse<T>
     {
@@ -14,3 +14,4 @@ namespace ProjectHubAPI.Models.Common
             => new() { Success = false, Message = message, Errors = errors };
     }
 }
+

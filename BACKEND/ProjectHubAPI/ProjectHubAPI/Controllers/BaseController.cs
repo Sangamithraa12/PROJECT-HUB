@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ProjectHubAPI.Models.Common;
+using ProjectHubAPI.Common.Responses;
 
 namespace ProjectHubAPI.Controllers
 {
@@ -17,3 +17,4 @@ namespace ProjectHubAPI.Controllers
         }
     }
 }
+

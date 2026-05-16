@@ -23,59 +23,35 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 
 ---
 
-# 📁 ProjectHub - Project Structure
+# 📂 Project Structure
 
+```text
 ProjectHub/
+├── BACKEND/ProjectHubAPI/      # ASP.NET Core Web API
+│   ├── Common/                 # Global Exceptions & Responses
+│   ├── Controllers/            # API Endpoints
+│   ├── Data/                   # DbContext & Seeding
+│   ├── DTOs/                   # Data Transfer Objects
+│   ├── Extensions/             # Service Configurations
+│   ├── Features/               # CORE LOGIC (Vertical Slices)
+│   ├── Hubs/                   # SignalR Real-time Hubs
+│   ├── Interfaces/             # Service Abstractions
+│   ├── Mapping/                # AutoMapper/Mapster Profiles
+│   ├── Models/                 # Database Entities
+│   ├── Repositories/           # Data Access Layer
+│   ├── Services/               # Business Services
+│   └── Program.cs              # Entry Point
 │
-├── FRONTEND/
-│   └── projecthub-ui/
-│       │
-│       ├── src/
-│       │   ├── app/
-│       │   │   ├── components/        # Reusable UI components
-│       │   │   ├── pages/             # Application pages/screens
-│       │   │   ├── services/          # API service calls
-│       │   │   ├── guards/            # Route protection (Auth Guard)
-│       │   │   ├── interceptors/      # HTTP interceptors (JWT, error handling)
-│       │   │   ├── models/            # Interfaces & data models
-│       │   │   ├── shared/            # Shared utilities/components
-│       │   │   └── app.routes.ts      # Angular routing configuration
-│       │
-│       │   ├── assets/                # Static assets (images, icons)
-│       │   ├── environments/          # Environment configuration (dev/prod)
-│       │   ├── index.html             # Main HTML file
-│       │   ├── main.ts                # Application bootstrap file
-│       │   ├── styles.css             # Global styles
-│       │
-│       ├── angular.json               # Angular configuration
-│       ├── package.json               # Dependencies & scripts
-│       ├── tsconfig.json              # TypeScript configuration
-│       └── README.md                  # Frontend documentation
-│
-└── BACKEND/
-    └── ProjectHubAPI/
-        │
-        ├── Common/                    # Shared constants & helper classes
-        ├── Controllers/               # API Controllers (Endpoints)
-        ├── Data/                      # DbContext & database configuration
-        ├── DTOs/                      # Data Transfer Objects
-        ├── Extensions/               # Dependency Injection extensions
-        ├── Features/                 # Feature-based modules
-        │   ├── Projects/             # Project management logic
-        │   └── Tasks/                # Task management logic
-        ├── Hubs/                     # SignalR real-time communication
-        ├── Interfaces/              # Abstractions / contracts
-        ├── Mapping/                 # AutoMapper / Mapster configs
-        ├── Models/                  # Database entities
-        ├── Repositories/            # Data access layer
-        ├── Services/                # Business logic layer
-        ├── Middleware/              # Custom middleware (auth, logging)
-        ├── Validators/              # FluentValidation rules
-        ├── Authentication/          # JWT authentication logic
-        ├── wwwroot/                 # Static files
-        ├── appsettings.json         # App configuration
-        ├── appsettings.Development.json
-        └── Program.cs               # Application entry point
+└── FRONTEND/projecthub-ui/     # Angular Standalone App
+    ├── src/app/
+    │   ├── components/         # UI Pages (Dashboard, Tasks, etc.)
+    │   ├── services/           # API & SignalR Services
+    │   ├── shared/             # Global Navbar & Sidebar
+    │   ├── models/             # Frontend Interfaces
+    │   └── app.routes.ts       # Routing Configuration
+    ├── angular.json            # Build Configuration
+    └── package.json            # Dependencies & Scripts
+
 ---
 
 # 🔄 Application Workflow

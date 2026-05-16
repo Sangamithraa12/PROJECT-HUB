@@ -23,9 +23,6 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 
 ---
 
-# 📂 Project Structure
-
-```text
 ProjectHub/
 │
 ├── FRONTEND/
@@ -52,22 +49,24 @@ ProjectHub/
 └── BACKEND/
     └── ProjectHubAPI/
         │
-        ├── Controllers/              → API Endpoints
-        ├── Features/                 → CQRS Commands & Queries
-        ├── Repositories/             → Database Access Layer
-        ├── Services/                 → Business Logic
-        ├── DTOs/                     → Data Transfer Objects
-        ├── Models/                   → Entity Models
-        ├── Middleware/               → Global Exception Handling
-        ├── Validators/               → FluentValidation Rules
-        ├── Hubs/                     → SignalR Real-time Hubs
-        ├── Mapping/                  → Mapster Configuration
-        ├── Data/                     → DbContext & Migrations
-        ├── Interfaces/               → Service & Repository Contracts
-        ├── Authentication/           → JWT Authentication Logic
-        └── Program.cs                → Startup Configuration
-```
-
+        ├── Common/                  → Shared utilities & responses
+        ├── Controllers/             → API Endpoints
+        ├── Data/                    → DbContext & database setup
+        ├── DTOs/                    → Data Transfer Objects
+        ├── Extensions/             → Service registration helpers
+        ├── Features/               → CQRS / Vertical Slice logic
+        │   ├── Projects/
+        │   └── Tasks/
+        │
+        ├── Hubs/                   → SignalR Real-time communication
+        ├── Interfaces/             → Service & repository contracts
+        ├── Mapping/                → Mapster configuration
+        ├── Models/                 → Entity models
+        ├── Repositories/           → Data access layer
+        ├── Services/               → Business logic layer
+        ├── Middleware/             → Global exception handling
+        ├── wwwroot/                → Static files/uploads
+        └── Program.cs             → Application startup
 ---
 
 # 🔄 Application Workflow

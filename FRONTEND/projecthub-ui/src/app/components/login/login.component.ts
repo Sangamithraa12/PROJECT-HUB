@@ -39,7 +39,6 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Login Error Object:', err);
         this.isLoading = false;
         
         if (err.status === 401) {

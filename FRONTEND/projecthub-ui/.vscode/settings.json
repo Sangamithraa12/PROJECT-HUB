@@ -1,0 +1,10 @@
+{
+  "ports.defaultPortAction": "openBrowserExternal",
+  "terminal.integrated.autoOpenExternalLinks": true,
+  "workbench.externalUriOpeners": {
+    "http://localhost:4200/**": "default",
+    "http://localhost:5000/**": "default",
+    "http://localhost:5242/**": "default"
+  }
+
+}

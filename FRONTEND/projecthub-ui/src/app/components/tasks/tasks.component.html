@@ -3,7 +3,7 @@
   <app-sidebar></app-sidebar>
 
   <main class="main-content">
-    <app-navbar></app-navbar>
+
 
     <div class="tasks-header animate-fade">
       <div class="header-left">
@@ -126,10 +126,6 @@
                   {{ task.proofUrl ? '📝 Proof' : '📤 Submit' }}
                 </button>
                 
-                <button (click)="openChat(task)" class="btn-chat-trigger" title="Open Task Bot">
-                  🤖 <span>Task Bot</span>
-                  <span class="comment-count" *ngIf="task.comments && task.comments.length > 0">{{ task.comments.length }}</span>
-                </button>
               </div>
             </div>
           </div>

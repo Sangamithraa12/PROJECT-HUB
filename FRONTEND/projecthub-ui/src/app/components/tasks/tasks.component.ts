@@ -7,7 +7,6 @@ import { ProjectService } from '../../services/project.service';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
-import { NavbarComponent } from '../../shared/navbar/navbar';
 import { of } from 'rxjs';
 import { catchError, finalize, timeout } from 'rxjs/operators';
 import { TaskItem, Project, CreateTaskDto, Comment } from '../../models/project.model';
@@ -15,11 +14,12 @@ import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { ViewChild, ElementRef } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { ChatService } from '../../services/chat.service';
+import { RealTimeChatService } from '../../services/real-time-chat.service';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, SidebarComponent, NavbarComponent],
+  imports: [CommonModule, RouterModule, FormsModule, SidebarComponent],
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
@@ -32,6 +32,7 @@ export class TasksComponent implements OnInit {
   users: any[] = [];
   filterStatus: string | null = null;
   searchTerm: string = '';
+
 
   taskStats = {
     total: 0,
@@ -72,6 +73,7 @@ export class TasksComponent implements OnInit {
     public auth: AuthService,
     private route: ActivatedRoute,
     private chatService: ChatService,
+    private realTimeChat: RealTimeChatService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -86,6 +88,13 @@ export class TasksComponent implements OnInit {
 
     this.loadProjects();
     this.loadUsers();
+
+    // Listen for real-time task updates
+    this.realTimeChat.refreshTasks$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadTasks();
+      }
+    });
   }
 
   setFilter(status: string | null): void {
@@ -143,6 +152,7 @@ export class TasksComponent implements OnInit {
         t.projectName?.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
+
     return filtered;
   }
 
@@ -462,9 +472,6 @@ export class TasksComponent implements OnInit {
   }
 
 
-  openChat(task: TaskItem): void {
-    this.chatService.openChat(task);
-  }
 
   getFullUrl(url?: string): string {
     if (!url) return '';

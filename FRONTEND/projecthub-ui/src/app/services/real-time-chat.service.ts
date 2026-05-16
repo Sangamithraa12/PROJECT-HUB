@@ -20,6 +20,12 @@ export class RealTimeChatService {
   private unreadCountSubject = new BehaviorSubject<number>(0);
   public unreadCount$ = this.unreadCountSubject.asObservable();
 
+  private refreshTasksSubject = new BehaviorSubject<boolean>(false);
+  public refreshTasks$ = this.refreshTasksSubject.asObservable();
+
+  private refreshProjectsSubject = new BehaviorSubject<boolean>(false);
+  public refreshProjects$ = this.refreshProjectsSubject.asObservable();
+
   private apiUrl = `${environment.apiUrl}/Message`;
 
   constructor(
@@ -110,7 +116,14 @@ export class RealTimeChatService {
     this.hubConnection.on('ReceiveNotification', (message: string) => {
       this.notificationService.loadNotifications();
       this.showBrowserNotification('System', message || 'You have a new notification');
-      // Update unread count is handled inside notificationService.loadNotifications()
+    });
+
+    this.hubConnection.on('RefreshTasks', () => {
+      this.refreshTasksSubject.next(true);
+    });
+
+    this.hubConnection.on('RefreshProjects', () => {
+      this.refreshProjectsSubject.next(true);
     });
   }
 

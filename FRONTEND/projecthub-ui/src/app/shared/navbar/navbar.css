@@ -15,31 +15,6 @@
   flex: 1;
 }
 
-.search-bar {
-  max-width: 400px;
-  background: var(--surface-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.search-icon {
-  opacity: 0.5;
-  font-size: 0.9rem;
-}
-
-.search-bar input {
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  width: 100%;
-  outline: none;
-}
-
 .nav-right {
   display: flex;
   align-items: center;

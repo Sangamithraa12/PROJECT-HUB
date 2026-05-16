@@ -8,6 +8,7 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { of } from 'rxjs';
 import { catchError, finalize, timeout } from 'rxjs/operators';
 import { Project, CreateProjectDto } from '../../models/project.model';
+import { RealTimeChatService } from '../../services/real-time-chat.service';
 
 @Component({
   selector: 'app-projects',
@@ -30,12 +31,19 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     public auth: AuthService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private realTimeChat: RealTimeChatService
   ) {}
 
   ngOnInit(): void {
     this.userRole = this.auth.getUserRole();
     this.loadProjects();
+
+    this.realTimeChat.refreshProjects$.subscribe(shouldRefresh => {
+      if (shouldRefresh) {
+        this.loadProjects();
+      }
+    });
   }
 
   loadProjects(): void {

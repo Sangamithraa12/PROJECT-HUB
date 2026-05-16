@@ -497,3 +497,4 @@
 .file-icon { font-size: 1.5rem; }
 .file-info { display: flex; flex-direction: column; }
 .file-name { font-size: 0.85rem; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+ 

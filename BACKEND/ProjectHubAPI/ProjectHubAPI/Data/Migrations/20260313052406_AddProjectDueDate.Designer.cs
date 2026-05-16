@@ -246,3 +246,4 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
+ 

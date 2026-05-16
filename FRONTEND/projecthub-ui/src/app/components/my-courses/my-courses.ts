@@ -60,3 +60,4 @@ export class MyCoursesComponent implements OnInit {
     this.activeTab = tab;
   }
 }
+ 

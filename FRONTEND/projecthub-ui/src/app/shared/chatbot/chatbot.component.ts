@@ -463,3 +463,4 @@ export class ChatBotComponent implements OnInit, OnDestroy {
     window.open(url, '_blank');
   }
 }
+ 

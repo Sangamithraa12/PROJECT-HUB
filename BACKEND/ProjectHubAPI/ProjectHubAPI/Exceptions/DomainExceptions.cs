@@ -13,3 +13,4 @@ namespace ProjectHubAPI.Exceptions
             : base($"Entity \"{name}\" ({key}) was not found.") { }
     }
 }
+ 

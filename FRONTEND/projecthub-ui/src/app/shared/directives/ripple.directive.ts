@@ -32,3 +32,4 @@ export class RippleDirective {
     }, 600);
   }
 }
+ 

@@ -76,3 +76,4 @@ export class NotificationService {
     chatNotifs.forEach(n => this.markAsRead(n.id).subscribe());
   }
 }
+ 

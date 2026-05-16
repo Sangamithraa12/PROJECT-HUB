@@ -6,3 +6,4 @@ namespace ProjectHubAPI.DTOs
         public UserResponseDto User { get; set; } = new UserResponseDto();
     }
 }
+ 

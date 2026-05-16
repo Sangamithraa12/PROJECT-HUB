@@ -62,3 +62,4 @@ export interface ActivityLog {
   type: string;
   createdAt: string;
 }
+ 

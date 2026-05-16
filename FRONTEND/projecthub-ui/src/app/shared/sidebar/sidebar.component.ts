@@ -135,3 +135,4 @@ export class SidebarComponent implements OnInit {
     this.auth.logout();
   }
 }
+ 

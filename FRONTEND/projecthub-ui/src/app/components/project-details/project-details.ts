@@ -288,3 +288,4 @@ export class ProjectDetailsComponent implements OnInit {
     })).sort((a, b) => b.completionRate - a.completionRate);
   }
 }
+ 

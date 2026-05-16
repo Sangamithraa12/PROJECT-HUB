@@ -63,3 +63,4 @@ export class NavbarComponent implements OnInit {
     this.notificationService.toggleNotifications();
   }
 }
+ 

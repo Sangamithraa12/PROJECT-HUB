@@ -365,7 +365,7 @@
   box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
 }
 
-/* When chat is open, suppress routerLinkActive highlights on page nav items */
+
 .chat-open a.nav-item.active:not(.assistant-link):not(.chat-link) {
   background: transparent;
   color: var(--text-secondary);
@@ -501,4 +501,3 @@
   box-shadow: 0 12px 20px rgba(236, 72, 153, 0.4);
   filter: brightness(1.1);
 }
- 

@@ -214,8 +214,7 @@ export class CourseDetails implements OnInit {
 
   updateYouTubeUrl(url: string): void {
     if (!url || !this.course) return;
-    
-    // Quick validation
+
     if (!url.includes('youtube.com') && !url.includes('youtu.be')) {
       alert('Please enter a valid YouTube link.');
       return;
@@ -353,4 +352,3 @@ export class CourseDetails implements OnInit {
     });
   }
 }
- 

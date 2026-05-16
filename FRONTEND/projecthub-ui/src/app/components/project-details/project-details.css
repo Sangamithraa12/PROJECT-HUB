@@ -114,7 +114,7 @@
     border-color: rgba(99, 102, 241, 0.2);
 }
 
-/* Stats Grid */
+
 .stats-overview-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -193,7 +193,7 @@
     letter-spacing: 0.05em;
 }
 
-/* Team Drawer specific styles */
+
 .team-drawer {
     background: rgba(15, 23, 42, 0.98);
 }
@@ -300,7 +300,7 @@
 
 .empty-illustration { font-size: 4rem; margin-bottom: 1.5rem; }
 
-/* Progress bar in description */
+
 .description-header {
     display: flex;
     justify-content: space-between;
@@ -365,7 +365,7 @@
     width: 100%;
 }
 
-/* Project Task Board */
+
 .project-task-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -465,7 +465,7 @@
 }
 
 .project-task-card.archival:hover {
-    border-color: #f59e0b; /* Amber/Archive feel */
+    border-color: #f59e0b; 
 }
 
 .archival-badge {
@@ -492,7 +492,7 @@
     margin-bottom: 0.25rem;
 }
 
-/* Task Explorer Drawer */
+
 .task-drawer-overlay {
     position: fixed;
     top: 0;
@@ -619,7 +619,7 @@
     font-weight: 600;
 }
 
-/* Chat Section (Removed as per user request) */
+
 
 .glass-card {
     background: var(--surface-light);
@@ -904,4 +904,3 @@
     margin-top: 1rem;
     font-size: 1.1rem;
 }
- 

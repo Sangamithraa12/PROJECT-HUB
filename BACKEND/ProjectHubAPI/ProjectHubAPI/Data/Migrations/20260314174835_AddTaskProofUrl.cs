@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ProjectHubAPI.Data.Migrations
 {
-    /// <inheritdoc />
+
     public partial class AddTaskProofUrl : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
@@ -17,7 +17,6 @@ namespace ProjectHubAPI.Data.Migrations
                 nullable: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -26,4 +25,3 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
- 

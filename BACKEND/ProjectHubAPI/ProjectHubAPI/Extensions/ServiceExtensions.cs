@@ -40,25 +40,22 @@ namespace ProjectHubAPI.Extensions
 
         public static void ConfigureApplicationServices(this IServiceCollection services)
         {
-            // Repositories
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
 
-            // Services
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IAuthService, AuthService>();
         }
 
         public static void ConfigureLibraries(this IServiceCollection services)
         {
-            // Fluent Validation
+
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
-            // MediatR
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-            // Mapster
             var config = TypeAdapterConfig.GlobalSettings;
             config.Scan(Assembly.GetExecutingAssembly());
             services.AddSingleton(config);
@@ -66,4 +63,3 @@ namespace ProjectHubAPI.Extensions
         }
     }
 }
- 

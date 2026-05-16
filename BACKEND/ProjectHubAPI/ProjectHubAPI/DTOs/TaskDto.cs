@@ -38,5 +38,3 @@ namespace ProjectHubAPI.DTOs
         public string? ProofUrl { get; set; }
     }
 }
-
- 

@@ -8,4 +8,3 @@ namespace ProjectHubAPI.DTOs
         public string Role { get; set; } = string.Empty;
     }
 }
- 

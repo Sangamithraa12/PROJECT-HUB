@@ -189,7 +189,7 @@ export class ProjectDetailsComponent implements OnInit {
       if (this.activeTask) {
         const taskId = this.activeTask.id;
         this.activeTask.status = newStatus;
-        // Also update in the main project tasks list
+
         if (this.project?.tasks) {
           const task = this.project.tasks.find(t => t.id === taskId);
           if (task) task.status = newStatus;
@@ -207,7 +207,6 @@ export class ProjectDetailsComponent implements OnInit {
     return diffDays <= 2;
   }
 
-  // --- Elite Dashboard Calculations ---
   
   getTaskStats() {
     if (!this.project?.tasks) return { total: 0, completed: 0, percentage: 0 };
@@ -232,14 +231,13 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   getPriorityClass(): string {
-    // Logic to determine priority based on deadline or other factors
+
     const days = this.getDaysRemaining();
     if (days <= 3) return 'high-priority';
     if (days <= 7) return 'mid-priority';
     return 'normal-priority';
   }
 
-  // --- Phase 12: Interactive Dashboard Methods ---
 
   scrollToTasks(): void {
     const element = document.querySelector('.tasks-section');
@@ -288,4 +286,3 @@ export class ProjectDetailsComponent implements OnInit {
     })).sort((a, b) => b.completionRate - a.completionRate);
   }
 }
- 

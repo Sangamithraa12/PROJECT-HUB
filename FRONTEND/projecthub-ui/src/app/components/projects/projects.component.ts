@@ -116,4 +116,3 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate(['/projects', id]);
   }
 }
- 

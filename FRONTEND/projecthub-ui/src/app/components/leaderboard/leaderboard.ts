@@ -42,4 +42,3 @@ export class Leaderboard implements OnInit {
     }
   }
 }
- 

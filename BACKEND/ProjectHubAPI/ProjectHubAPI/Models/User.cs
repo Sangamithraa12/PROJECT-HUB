@@ -15,5 +15,3 @@ namespace ProjectHubAPI.Models
         public virtual Role? Role { get; set; }
     }
 }
-
- 

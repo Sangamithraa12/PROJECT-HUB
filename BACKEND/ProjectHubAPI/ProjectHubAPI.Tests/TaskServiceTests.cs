@@ -38,7 +38,7 @@ namespace ProjectHubAPI.Tests.Services
         [Fact]
         public async Task GetAllTasks_ReturnsAllTasks()
         {
-            // Arrange
+
             var context = GetDatabaseContext();
             var project = new Project { Id = 1, Name = "Test Project", FilesUrl = "", Status = "Active" };
             var user = new User { Id = 1, Name = "Test User" };
@@ -50,10 +50,8 @@ namespace ProjectHubAPI.Tests.Services
 
             var service = new TaskService(context, _mockEnv.Object, _mapper);
 
-            // Act
             var result = await service.GetAllTasksAsync();
 
-            // Assert
             Assert.Equal(2, result.Count());
             Assert.All(result, t => Assert.Equal("Test Project", t.ProjectName));
         }
@@ -61,7 +59,7 @@ namespace ProjectHubAPI.Tests.Services
         [Fact]
         public async Task UpdateStatus_ReturnsTrue_AndAddsNotification()
         {
-            // Arrange
+
             var context = GetDatabaseContext();
             var task = new TaskItem { Id = 1, Title = "Task 1", Status = "Pending", AssignedTo = 1 };
             context.Tasks.Add(task);
@@ -73,10 +71,8 @@ namespace ProjectHubAPI.Tests.Services
 
             var service = new TaskService(context, _mockEnv.Object, _mapper);
 
-            // Act
             var result = await service.UpdateStatusAsync(1, "Completed");
 
-            // Assert
             Assert.True(result);
             Assert.Equal("Completed", task.Status);
             Assert.True(await context.Notifications.AnyAsync(n => n.UserId == 1)); 
@@ -84,4 +80,3 @@ namespace ProjectHubAPI.Tests.Services
         }
     }
 }
- 

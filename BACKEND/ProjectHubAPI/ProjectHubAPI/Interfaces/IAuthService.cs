@@ -9,4 +9,3 @@ namespace ProjectHubAPI.Interfaces
         Task<ServiceResponse<LoginResponseDto>> LoginAsync(LoginDto loginDto);
     }
 }
- 

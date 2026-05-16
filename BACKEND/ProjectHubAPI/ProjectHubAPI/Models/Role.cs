@@ -7,5 +7,3 @@ namespace ProjectHubAPI.Models
         public string Name { get; set; }
     }
 }
-
- 

@@ -13,5 +13,3 @@ namespace ProjectHubAPI.Models
         public DateTime AssignedAt { get; set; } = DateTime.UtcNow;
     }
 }
-
- 

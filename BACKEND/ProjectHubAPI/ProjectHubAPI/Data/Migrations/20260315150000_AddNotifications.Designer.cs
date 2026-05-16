@@ -12,7 +12,7 @@ namespace ProjectHubAPI.Data.Migrations
     [Migration("20260315150000_AddNotifications")]
     partial class AddNotifications
     {
-        /// <inheritdoc />
+
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -22,9 +22,7 @@ namespace ProjectHubAPI.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            // ... (I will need to copy the full model snapshot logic here, but for now I'll focus on the Snapshot file itself)
 #pragma warning restore 612, 618
         }
     }
 }
- 

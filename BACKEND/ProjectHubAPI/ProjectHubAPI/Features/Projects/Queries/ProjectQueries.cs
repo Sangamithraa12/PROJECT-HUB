@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace ProjectHubAPI.Features.Projects.Queries
 {
-    // ─── Query Definition ───────────────────────────────────────────────────────
+
     public record GetAllProjectsQuery() : IRequest<ServiceResponse<IEnumerable<ProjectDto>>>;
 
     public record GetProjectByIdQuery(int Id) : IRequest<ServiceResponse<ProjectDto>>;
 
-    // ─── Handlers ────────────────────────────────────────────────────────────────
     public class GetAllProjectsHandler : IRequestHandler<GetAllProjectsQuery, ServiceResponse<IEnumerable<ProjectDto>>>
     {
         private readonly IProjectRepository _projectRepo;
@@ -62,5 +61,3 @@ namespace ProjectHubAPI.Features.Projects.Queries
         }
     }
 }
-
- 

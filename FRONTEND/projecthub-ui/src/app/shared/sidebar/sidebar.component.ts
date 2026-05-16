@@ -64,15 +64,13 @@ export class SidebarComponent implements OnInit {
   }
 
   handleNotificationClick(n: Notification): void {
-    // 1. Mark as read
+
     if (!n.isRead) {
       this.notificationService.markAsRead(n.id).subscribe();
     }
 
-    // 2. Close dropdown
     this.showNotifications = false;
 
-    // 3. Navigate based on type
     switch (n.type) {
       case 'Chat':
       case 'Task':
@@ -96,7 +94,7 @@ export class SidebarComponent implements OnInit {
         }
         break;
       default:
-        // Default to dashboard if unknown
+
         this.router.navigate(['/dashboard']);
         break;
     }
@@ -135,4 +133,3 @@ export class SidebarComponent implements OnInit {
     this.auth.logout();
   }
 }
- 

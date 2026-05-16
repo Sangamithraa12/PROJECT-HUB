@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectHubAPI.Data.Migrations
 {
-    /// <inheritdoc />
+
     public partial class AddTaskDueDate : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
@@ -18,7 +18,6 @@ namespace ProjectHubAPI.Data.Migrations
                 nullable: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -27,4 +26,3 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
- 

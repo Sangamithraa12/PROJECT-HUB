@@ -70,10 +70,8 @@ export class NotificationService {
   markAllChatAsRead(): void {
     const current = this.notificationsSubject.value;
     const chatNotifs = current.filter(n => n.type === 'Chat' && !n.isRead);
-    
-    // We can mark them one by one or add a backend endpoint for mark-type-as-read
-    // For now, let's mark them locally and trigger a backend call for each (simple but less efficient)
+
+
     chatNotifs.forEach(n => this.markAsRead(n.id).subscribe());
   }
 }
- 

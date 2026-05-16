@@ -26,4 +26,3 @@ export const routes: Routes = [
   { path: 'certificates', component: Certificates, canActivate: [AuthGuard], data: { animation: 'CertificatesPage' } }
 
 ];
- 

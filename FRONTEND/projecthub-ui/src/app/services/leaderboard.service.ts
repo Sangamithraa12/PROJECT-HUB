@@ -23,4 +23,3 @@ export class LeaderboardService {
     return this.http.get<LeaderboardEntry[]>(this.apiUrl);
   }
 }
- 

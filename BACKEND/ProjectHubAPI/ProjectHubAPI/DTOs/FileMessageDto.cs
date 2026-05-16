@@ -9,4 +9,3 @@ namespace ProjectHubAPI.DTOs
         public IFormFile File { get; set; }
     }
 }
- 

@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjectHubAPI.Data.Migrations
 {
-    /// <inheritdoc />
+
     public partial class AddNotifications : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -42,7 +42,6 @@ namespace ProjectHubAPI.Data.Migrations
                 column: "UserId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -50,4 +49,3 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
- 

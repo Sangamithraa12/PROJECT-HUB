@@ -4,4 +4,3 @@ export interface ServiceResponse<T> {
     message: string;
     errors?: string[];
 }
- 

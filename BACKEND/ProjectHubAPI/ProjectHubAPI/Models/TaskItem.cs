@@ -27,5 +27,3 @@ namespace ProjectHubAPI.Models
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
-
- 

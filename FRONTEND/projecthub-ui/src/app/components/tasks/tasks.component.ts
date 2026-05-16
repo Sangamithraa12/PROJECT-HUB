@@ -89,7 +89,6 @@ export class TasksComponent implements OnInit {
     this.loadProjects();
     this.loadUsers();
 
-    // Listen for real-time task updates
     this.realTimeChat.refreshTasks$.subscribe(shouldRefresh => {
       if (shouldRefresh) {
         this.loadTasks();
@@ -487,4 +486,3 @@ export class TasksComponent implements OnInit {
     return diffDays <= 2;
   }
 }
- 

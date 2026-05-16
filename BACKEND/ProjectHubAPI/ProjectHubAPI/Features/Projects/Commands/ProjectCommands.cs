@@ -14,12 +14,11 @@ using System.Threading.Tasks;
 
 namespace ProjectHubAPI.Features.Projects.Commands
 {
-    // ─── Command Definitions ─────────────────────────────────────────────────────
+
     public record CreateProjectCommand(CreateProjectDto Dto) : IRequest<ServiceResponse<ProjectDto>>;
     public record UpdateProjectCommand(int Id, CreateProjectDto Dto) : IRequest<ServiceResponse<ProjectDto>>;
     public record DeleteProjectCommand(int Id) : IRequest<ServiceResponse<bool>>;
 
-    // ─── Handlers ────────────────────────────────────────────────────────────────
     public class CreateProjectHandler : IRequestHandler<CreateProjectCommand, ServiceResponse<ProjectDto>>
     {
         private readonly IProjectRepository _repo;
@@ -100,5 +99,3 @@ namespace ProjectHubAPI.Features.Projects.Commands
         }
     }
 }
-
- 

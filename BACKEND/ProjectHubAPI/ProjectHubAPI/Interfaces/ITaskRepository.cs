@@ -15,4 +15,3 @@ namespace ProjectHubAPI.Interfaces
         Task<bool> SaveChangesAsync();
     }
 }
- 

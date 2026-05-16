@@ -33,4 +33,3 @@ namespace ProjectHubAPI.DTOs
         public List<CourseModuleDto> Modules { get; set; } = new List<CourseModuleDto>();
     }
 }
- 

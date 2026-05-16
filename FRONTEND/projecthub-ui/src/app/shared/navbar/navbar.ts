@@ -30,19 +30,16 @@ export class NavbarComponent implements OnInit {
     const user = this.auth.currentUserValue;
     this.userName = user?.user?.name || 'User';
 
-    // Combine real-time count with persistent notification count for Chat type
     this.notificationService.notifications$.pipe(
       map(notifications => notifications.filter(n => n.type === 'Chat' && !n.isRead).length)
     ).subscribe(count => {
       this.unreadCount = count;
     });
 
-    // Listen to all notifications for the bell icon
     this.notificationService.unreadCount$.subscribe(count => {
       this.notificationCount = count;
     });
 
-    // Also listen to real-time service for immediate feedback
     this.realTimeChat.unreadCount$.subscribe(count => {
       if (count > 0) {
         this.unreadCount += count;
@@ -63,4 +60,3 @@ export class NavbarComponent implements OnInit {
     this.notificationService.toggleNotifications();
   }
 }
- 

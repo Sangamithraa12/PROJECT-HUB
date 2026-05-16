@@ -14,5 +14,3 @@ namespace ProjectHubAPI.Common.Responses
             => new() { Success = false, Message = message, Errors = errors };
     }
 }
-
- 

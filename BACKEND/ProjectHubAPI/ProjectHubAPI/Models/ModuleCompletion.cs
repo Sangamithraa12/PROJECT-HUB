@@ -25,4 +25,3 @@ namespace ProjectHubAPI.Models
         public DateTime CompletedDate { get; set; } = DateTime.UtcNow;
     }
 }
- 

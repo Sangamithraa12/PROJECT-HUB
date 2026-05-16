@@ -115,7 +115,7 @@
 
 .message-wrapper.own-message {
   align-self: flex-end;
-  flex-direction: row; /* Keep standard row but alignment handles it */
+  flex-direction: row; 
   max-width: 80%;
 }
 
@@ -454,7 +454,7 @@
 .menu-divider::before, .menu-divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
 .menu-divider span { padding: 0 1rem; }
 
-/* Media Preview Styles */
+
 .image-preview-box {
   margin: 0.5rem 0;
   max-width: 260px;
@@ -497,4 +497,3 @@
 .file-icon { font-size: 1.5rem; }
 .file-info { display: flex; flex-direction: column; }
 .file-name { font-size: 0.85rem; font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
- 

@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace ProjectHubAPI.Features.Tasks.Queries
 {
-    // ─── Query Definitions ───────────────────────────────────────────────────────
+
     public record GetAllTasksQuery() : IRequest<ServiceResponse<IEnumerable<TaskDto>>>;
     public record GetTaskByIdQuery(int Id) : IRequest<ServiceResponse<TaskDto>>;
 
-    // ─── Handlers ────────────────────────────────────────────────────────────────
     public class GetAllTasksHandler : IRequestHandler<GetAllTasksQuery, ServiceResponse<IEnumerable<TaskDto>>>
     {
         private readonly AppDbContext _context;
@@ -67,4 +66,3 @@ namespace ProjectHubAPI.Features.Tasks.Queries
         }
     }
 }
- 

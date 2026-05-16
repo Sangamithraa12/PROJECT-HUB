@@ -48,4 +48,3 @@ export class AppComponent {
     return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 }
- 

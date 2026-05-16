@@ -48,6 +48,3 @@ namespace ProjectHubAPI.Common.Exceptions
         }
     }
 }
-
-
- 

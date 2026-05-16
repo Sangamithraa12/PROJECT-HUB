@@ -40,5 +40,3 @@ export interface Enrollment {
     assignedById?: number;
     dueDate?: string | Date;
 }
-
- 

@@ -25,8 +25,7 @@ export class ChatBotComponent implements OnInit, OnDestroy {
   allTasks: TaskItem[] = [];
   isAiMode: boolean = false;
   aiMessages: any[] = [];
-  
-  // Team Chat Mode
+
   isDmMode: boolean = false;
   isTeamOnlyMode: boolean = false;
   activeChatUser: any = null;
@@ -63,7 +62,6 @@ export class ChatBotComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     }));
 
-    // Track unread counts per user from notifications
     this.subs.add(this.notificationService.notifications$.pipe(
       map(notifications => {
         const counts: { [userId: number]: number } = {};
@@ -178,7 +176,6 @@ export class ChatBotComponent implements OnInit, OnDestroy {
     this.isAiMode = false;
     this.activeTask = null;
 
-    // Clear notifications from this specific user
     this.notificationService.notifications$.pipe(
       take(1),
       map(notifs => notifs.filter(n => n.type === 'Chat' && !n.isRead && n.relatedId === user.id))
@@ -463,4 +460,3 @@ export class ChatBotComponent implements OnInit, OnDestroy {
     window.open(url, '_blank');
   }
 }
- 

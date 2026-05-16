@@ -7,5 +7,3 @@ namespace ProjectHubAPI.DTOs
         public string Password { get; set; }
     }
 }
-
- 

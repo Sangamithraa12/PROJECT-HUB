@@ -133,5 +133,3 @@ export class UsersComponent implements OnInit {
     this.auth.logout();
   }
 }
-
- 

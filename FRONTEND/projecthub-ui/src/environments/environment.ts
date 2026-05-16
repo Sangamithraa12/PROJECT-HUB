@@ -3,4 +3,3 @@ export const environment = {
   apiUrl: 'https://localhost:10001/api',
   fileBaseUrl: 'https://localhost:10001'
 };
- 

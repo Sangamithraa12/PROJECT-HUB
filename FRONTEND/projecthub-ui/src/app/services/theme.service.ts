@@ -31,5 +31,3 @@ export class ThemeService {
     return this.currentTheme;
   }
 }
-
- 

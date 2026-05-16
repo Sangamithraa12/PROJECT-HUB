@@ -49,4 +49,3 @@ export class ProjectService {
     return this.http.post<ServiceResponse<string>>(`${this.apiUrl}/${id}/upload-folder`, formData);
   }
 }
- 

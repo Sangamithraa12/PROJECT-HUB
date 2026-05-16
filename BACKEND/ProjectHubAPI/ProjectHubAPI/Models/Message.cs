@@ -15,9 +15,7 @@ namespace ProjectHubAPI.Models
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
         public bool IsRead { get; set; } = false;
 
-        // Navigation properties
         public virtual User Sender { get; set; }
         public virtual User Receiver { get; set; }
     }
 }
- 

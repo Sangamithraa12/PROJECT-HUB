@@ -20,7 +20,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -47,14 +46,13 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(optio
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        // context.Database.Migrate(); // Uncomment if you want automatic migrations
+
         DbInitializer.Seed(context);
     }
     catch (Exception ex)
@@ -99,5 +97,3 @@ app.MapControllers();
 app.MapHub<ChatHub>("/chathub");
 
 app.Run();
-
- 

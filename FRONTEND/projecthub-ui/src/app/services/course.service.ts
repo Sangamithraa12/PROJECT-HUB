@@ -93,4 +93,3 @@ export class CourseService {
     return this.http.post(`${this.apiUrl}/modules/${moduleId}/upload-video`, formData);
   }
 }
- 

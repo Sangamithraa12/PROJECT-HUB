@@ -363,7 +363,7 @@
 }
 
 .high-priority-badge {
-  background: rgba(244, 63, 94, 0.15); /* error/red tint */
+  background: rgba(244, 63, 94, 0.15); 
   color: var(--error);
   border: 1px solid rgba(244, 63, 94, 0.3);
   padding: 0.25rem 0.6rem;
@@ -1238,7 +1238,7 @@
   transition: width 0.3s;
 }
 
-/* Media Bubbles */
+
 .message-media {
   margin-bottom: 0.75rem;
   border-radius: 12px;
@@ -1365,4 +1365,3 @@
 }
 
 .kanban-board { display: none; }
- 

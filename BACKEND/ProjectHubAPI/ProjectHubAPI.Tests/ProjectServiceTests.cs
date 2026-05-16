@@ -38,7 +38,7 @@ namespace ProjectHubAPI.Tests.Services
         [Fact]
         public async Task GetAllProjects_ReturnsAllProjects()
         {
-            // Arrange
+
             var context = GetDatabaseContext();
             context.Projects.Add(new Project { Id = 1, Name = "Test Project 1", Description = "Desc 1", FilesUrl = "", Status = "Active" });
             context.Projects.Add(new Project { Id = 2, Name = "Test Project 2", Description = "Desc 2", FilesUrl = "", Status = "Active" });
@@ -46,27 +46,23 @@ namespace ProjectHubAPI.Tests.Services
 
             var service = new ProjectService(context, _mockEnv.Object, _mapper);
 
-            // Act
             var result = await service.GetAllProjectsAsync();
 
-            // Assert
             Assert.Equal(2, result.Count());
         }
 
         [Fact]
         public async Task GetProjectById_ReturnsProject_WhenProjectExists()
         {
-            // Arrange
+
             var context = GetDatabaseContext();
             context.Projects.Add(new Project { Id = 1, Name = "Test Project 1", Description = "Desc 1", FilesUrl = "", Status = "Active" });
             await context.SaveChangesAsync();
 
             var service = new ProjectService(context, _mockEnv.Object, _mapper);
 
-            // Act
             var result = await service.GetProjectByIdAsync(1);
 
-            // Assert
             Assert.NotNull(result);
             Assert.Equal("Test Project 1", result.Name);
         }
@@ -74,18 +70,15 @@ namespace ProjectHubAPI.Tests.Services
         [Fact]
         public async Task CreateProject_AddsProjectToDatabase()
         {
-            // Arrange
+
             var context = GetDatabaseContext();
             var service = new ProjectService(context, _mockEnv.Object, _mapper);
             var createDto = new CreateProjectDto { Name = "New Project", Description = "New Desc" };
 
-            // Act
             var result = await service.CreateProjectAsync(createDto);
 
-            // Assert
             Assert.Equal(1, await context.Projects.CountAsync());
             Assert.Equal("New Project", result.Name);
         }
     }
 }
- 

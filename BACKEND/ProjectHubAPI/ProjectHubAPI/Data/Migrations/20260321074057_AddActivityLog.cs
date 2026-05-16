@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ProjectHubAPI.Data.Migrations
 {
-    /// <inheritdoc />
+
     public partial class AddActivityLog : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -52,7 +52,6 @@ namespace ProjectHubAPI.Data.Migrations
                 column: "UserId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -60,4 +59,3 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
- 

@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace ProjectHubAPI.Data.Migrations
 {
-    /// <inheritdoc />
+
     public partial class AddProjectBudgetAndStatus : Migration
     {
-        /// <inheritdoc />
+
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<decimal>(
@@ -24,7 +24,6 @@ namespace ProjectHubAPI.Data.Migrations
                 nullable: true);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
@@ -37,4 +36,3 @@ namespace ProjectHubAPI.Data.Migrations
         }
     }
 }
- 

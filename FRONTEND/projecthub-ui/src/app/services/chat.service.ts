@@ -41,4 +41,3 @@ export class ChatService {
     this.isOpenSubject.next(!this.isOpenSubject.value);
   }
 }
- 

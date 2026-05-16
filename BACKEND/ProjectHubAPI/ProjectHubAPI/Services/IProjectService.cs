@@ -17,5 +17,3 @@ namespace ProjectHubAPI.Services
         Task<ServiceResponse<string>> UploadProjectFolderAsync(int id, List<ProjectFileData> files);
     }
 }
-
- 

@@ -64,4 +64,3 @@ export class Certificates implements OnInit {
     }, 100);
   }
 }
- 

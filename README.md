@@ -23,49 +23,59 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 
 ---
 
-### ProjectHub/
+# 📁 ProjectHub - Project Structure
+
+ProjectHub/
 │
 ├── FRONTEND/
 │   └── projecthub-ui/
+│       │
 │       ├── src/
 │       │   ├── app/
-│       │   ├── components/
-│       │   ├── pages/
-│       │   ├── services/
-│       │   ├── guards/
-│       │   ├── interceptors/
-│       │   ├── models/
-│       │   ├── shared/
-│       │   └── app.routes.ts
+│       │   │   ├── components/        # Reusable UI components
+│       │   │   ├── pages/             # Application pages/screens
+│       │   │   ├── services/          # API service calls
+│       │   │   ├── guards/            # Route protection (Auth Guard)
+│       │   │   ├── interceptors/      # HTTP interceptors (JWT, error handling)
+│       │   │   ├── models/            # Interfaces & data models
+│       │   │   ├── shared/            # Shared utilities/components
+│       │   │   └── app.routes.ts      # Angular routing configuration
 │       │
-│       ├── assets/
-│       └── environments/
-│
-│       ├── angular.json
-│       ├── package.json
-│       └── tsconfig.json
+│       │   ├── assets/                # Static assets (images, icons)
+│       │   ├── environments/          # Environment configuration (dev/prod)
+│       │   ├── index.html             # Main HTML file
+│       │   ├── main.ts                # Application bootstrap file
+│       │   ├── styles.css             # Global styles
+│       │
+│       ├── angular.json               # Angular configuration
+│       ├── package.json               # Dependencies & scripts
+│       ├── tsconfig.json              # TypeScript configuration
+│       └── README.md                  # Frontend documentation
 │
 └── BACKEND/
     └── ProjectHubAPI/
-        ├── Common/
-        ├── Controllers/
-        ├── Data/
-        ├── DTOs/
-        ├── Extensions/
-        ├── Features/
-        │   ├── Projects/
-        │   └── Tasks/
-        ├── Hubs/
-        ├── Interfaces/
-        ├── Mapping/
-        ├── Models/
-        ├── Repositories/
-        ├── Services/
-        ├── Middleware/
-        ├── Validators/
-        ├── Authentication/
-        ├── wwwroot/
-        └── Program.cs
+        │
+        ├── Common/                    # Shared constants & helper classes
+        ├── Controllers/               # API Controllers (Endpoints)
+        ├── Data/                      # DbContext & database configuration
+        ├── DTOs/                      # Data Transfer Objects
+        ├── Extensions/               # Dependency Injection extensions
+        ├── Features/                 # Feature-based modules
+        │   ├── Projects/             # Project management logic
+        │   └── Tasks/                # Task management logic
+        ├── Hubs/                     # SignalR real-time communication
+        ├── Interfaces/              # Abstractions / contracts
+        ├── Mapping/                 # AutoMapper / Mapster configs
+        ├── Models/                  # Database entities
+        ├── Repositories/            # Data access layer
+        ├── Services/                # Business logic layer
+        ├── Middleware/              # Custom middleware (auth, logging)
+        ├── Validators/              # FluentValidation rules
+        ├── Authentication/          # JWT authentication logic
+        ├── wwwroot/                 # Static files
+        ├── appsettings.json         # App configuration
+        ├── appsettings.Development.json
+        └── Program.cs               # Application entry point
 ---
 
 # 🔄 Application Workflow

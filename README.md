@@ -54,7 +54,7 @@ ProjectHub/
 
 ---
 
-# 🔄 Application Workflow
+🔄 Application Workflow
 
 ```text
 User Action

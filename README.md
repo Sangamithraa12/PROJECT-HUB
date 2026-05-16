@@ -23,7 +23,7 @@ ProjectHub combines project tracking, real-time communication, employee collabor
 
 ---
 
-ProjectHub/
+#ProjectHub/
 │
 ├── FRONTEND/
 │   └── projecthub-ui/

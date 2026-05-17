@@ -37,6 +37,7 @@ ProjectHub/
 │   ├── Hubs/                   # SignalR Real-time Hubs
 │   ├── Interfaces/             # Service Abstractions
 │   ├── Mapping/                # AutoMapper/Mapster Profiles
+│   ├── Migrations/             # EF Core Database Migrations (Root level)
 │   ├── Models/                 # Database Entities
 │   ├── Repositories/           # Data Access Layer
 │   ├── Services/               # Business Services
@@ -511,6 +512,10 @@ Database: ProjectHubDB
 Server: localhost\SQLEXPRESS
 ORM: Entity Framework Core
 Approach: Code-First Migrations
+Migrations Path: ProjectHubAPI/Migrations/
+
+To add a new migration, use:
+dotnet ef migrations add <MigrationName> -o Migrations
 ```
 
 ---

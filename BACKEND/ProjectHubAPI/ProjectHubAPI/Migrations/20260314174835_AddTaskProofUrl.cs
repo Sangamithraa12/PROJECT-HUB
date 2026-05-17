@@ -2,17 +2,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
 
-    public partial class PersistProjectFilesUrl : Migration
+    public partial class AddTaskProofUrl : Migration
     {
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "FilesUrl",
-                table: "Projects",
+                name: "ProofUrl",
+                table: "Tasks",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -20,8 +20,8 @@ namespace ProjectHubAPI.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FilesUrl",
-                table: "Projects");
+                name: "ProofUrl",
+                table: "Tasks");
         }
     }
 }

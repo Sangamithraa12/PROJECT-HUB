@@ -6,7 +6,7 @@ using ProjectHubAPI.Data;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260315150000_AddNotifications")]

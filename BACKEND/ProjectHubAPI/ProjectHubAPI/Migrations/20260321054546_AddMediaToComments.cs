@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
 
     public partial class AddMediaToComments : Migration

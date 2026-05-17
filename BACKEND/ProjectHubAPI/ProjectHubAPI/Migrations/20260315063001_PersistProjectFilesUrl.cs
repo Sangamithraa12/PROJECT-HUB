@@ -2,23 +2,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
 
-    public partial class AddProjectBudgetAndStatus : Migration
+    public partial class PersistProjectFilesUrl : Migration
     {
 
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<decimal>(
-                name: "Budget",
-                table: "Projects",
-                type: "decimal(18,2)",
-                nullable: false,
-                defaultValue: 0m);
-
             migrationBuilder.AddColumn<string>(
-                name: "Status",
+                name: "FilesUrl",
                 table: "Projects",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -27,11 +20,7 @@ namespace ProjectHubAPI.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Budget",
-                table: "Projects");
-
-            migrationBuilder.DropColumn(
-                name: "Status",
+                name: "FilesUrl",
                 table: "Projects");
         }
     }

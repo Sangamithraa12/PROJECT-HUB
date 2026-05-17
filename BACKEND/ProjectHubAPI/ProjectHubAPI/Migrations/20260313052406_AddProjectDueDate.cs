@@ -1,27 +1,26 @@
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
-
-    public partial class AddTaskProofUrl : Migration
+    public partial class AddProjectDueDate : Migration
     {
-
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ProofUrl",
-                table: "Tasks",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<DateTime>(
+                name: "DueDate",
+                table: "Projects",
+                type: "datetime2",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "ProofUrl",
-                table: "Tasks");
+                name: "DueDate",
+                table: "Projects");
         }
     }
 }

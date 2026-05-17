@@ -8,11 +8,11 @@ using ProjectHubAPI.Data;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260315063001_PersistProjectFilesUrl")]
-    partial class PersistProjectFilesUrl
+    [Migration("20260314160931_AddCoursesAndEnrollments")]
+    partial class AddCoursesAndEnrollments
     {
 
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,20 +73,11 @@ namespace ProjectHubAPI.Data.Migrations
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("QuizData")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResourceUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ThumbnailUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -102,22 +93,13 @@ namespace ProjectHubAPI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CompletionDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EnrolledDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("ProgressPercentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuizScore")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -143,10 +125,6 @@ namespace ProjectHubAPI.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Budget")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,17 +134,11 @@ namespace ProjectHubAPI.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FilesUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -228,9 +200,6 @@ namespace ProjectHubAPI.Data.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProofUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");

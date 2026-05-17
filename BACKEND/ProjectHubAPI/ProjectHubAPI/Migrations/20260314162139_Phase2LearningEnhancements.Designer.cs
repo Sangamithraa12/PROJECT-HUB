@@ -8,11 +8,11 @@ using ProjectHubAPI.Data;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260314174835_AddTaskProofUrl")]
-    partial class AddTaskProofUrl
+    [Migration("20260314162139_Phase2LearningEnhancements")]
+    partial class Phase2LearningEnhancements
     {
 
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,9 +218,6 @@ namespace ProjectHubAPI.Data.Migrations
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ProofUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");

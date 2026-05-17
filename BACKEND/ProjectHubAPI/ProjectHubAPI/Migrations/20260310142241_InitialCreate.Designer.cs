@@ -8,11 +8,11 @@ using ProjectHubAPI.Data;
 
 #nullable disable
 
-namespace ProjectHubAPI.Data.Migrations
+namespace ProjectHubAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260313052406_AddProjectDueDate")]
-    partial class AddProjectDueDate
+    [Migration("20260310142241_InitialCreate")]
+    partial class InitialCreate
     {
 
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,9 +63,6 @@ namespace ProjectHubAPI.Data.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -180,7 +177,7 @@ namespace ProjectHubAPI.Data.Migrations
             modelBuilder.Entity("ProjectHubAPI.Models.Comment", b =>
                 {
                     b.HasOne("ProjectHubAPI.Models.TaskItem", "Task")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -235,11 +232,6 @@ namespace ProjectHubAPI.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ProjectHubAPI.Models.TaskItem", b =>
-                {
-                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }
